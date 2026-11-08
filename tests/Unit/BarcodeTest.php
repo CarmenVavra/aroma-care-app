@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Enums\ProductCategory;
+use App\Services\ProductLookup\CodeHints;
 use App\Services\ProductLookup\ProductTitleParser;
 use App\Support\Barcode;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -16,18 +17,18 @@ class BarcodeTest extends TestCase
     public static function codes(): array
     {
         return [
-            'EAN-13' => ['4260123456785', '4260123456785'],
-            'UPC-A' => ['812345678905', '812345678905'],
-            'with whitespace' => ["  4260123456785\n", '4260123456785'],
-            'GTIN-14 with leading zero' => ['04260123456785', '4260123456785'],
-            'GS1 element string, bracketed' => ['(01)04260123456785(10)LOT42', '4260123456785'],
-            'GS1 DataMatrix with symbology id' => ["]d2010426012345678510LOT\x1D17290101", '4260123456785'],
-            'GS1 Digital Link' => ['https://id.example.com/01/04260123456785/10/LOT42?exp=2901', '4260123456785'],
+            'EAN-13' => ['4260123456788', '4260123456788'],
+            'UPC-A' => ['812345678901', '812345678901'],
+            'with whitespace' => ["  4260123456788\n", '4260123456788'],
+            'GTIN-14 with leading zero' => ['04260123456788', '4260123456788'],
+            'GS1 element string, bracketed' => ['(01)04260123456788(10)LOT42', '4260123456788'],
+            'GS1 DataMatrix with symbology id' => ["]d2010426012345678810LOT\x1D17290101", '4260123456788'],
+            'GS1 Digital Link' => ['https://id.example.com/01/04260123456788/10/LOT42?exp=2901', '4260123456788'],
             'article number (Code 128)' => ['60200133', '60200133'],
             'alphanumeric Code 39' => ['AB-1234/5', 'AB-1234/5'],
             'QR code with a link is kept' => ['https://www.example.com/lavender?ref=qr&x=1', 'https://www.example.com/lavender?ref=qr&x=1'],
             'QR code with text' => ["Lavender\nLot 4521 – 15 ml", 'Lavender Lot 4521 – 15 ml'],
-            'Digital Link without scheme' => ['www.example.com/01/04260123456785', '4260123456785'],
+            'Digital Link without scheme' => ['www.example.com/01/04260123456788', '4260123456788'],
             'too long' => [str_repeat('a', 513), null],
             'empty' => ['   ', null],
         ];
@@ -41,9 +42,9 @@ class BarcodeTest extends TestCase
 
     public function test_upc_and_ean_variants(): void
     {
-        $this->assertSame(['812345678905', '0812345678905'], Barcode::variants('812345678905'));
-        $this->assertSame(['0812345678905', '812345678905'], Barcode::variants('0812345678905'));
-        $this->assertSame(['4260123456785'], Barcode::variants('4260123456785'));
+        $this->assertSame(['812345678901', '0812345678901'], Barcode::variants('812345678901'));
+        $this->assertSame(['0812345678901', '812345678901'], Barcode::variants('0812345678901'));
+        $this->assertSame(['4260123456788'], Barcode::variants('4260123456788'));
         $this->assertSame(['AB-1'], Barcode::variants('AB-1'));
     }
 
@@ -102,5 +103,57 @@ class BarcodeTest extends TestCase
     public function test_takes_first_of_several_brands(): void
     {
         $this->assertSame('Primavera', (new ProductTitleParser)->parse('x', 'Lavendel', 'Primavera, Primavera Life')->brand);
+    }
+
+    public function test_shop_title_is_cut_before_marketing_text(): void
+    {
+        $s = (new ProductTitleParser)->parse(
+            'x',
+            'Naissance Cold Pressed Golden Jojoba Oil (no. 233) 500ml - Pure & Natural, Unrefined, Vegan',
+            'Naissance',
+        );
+
+        $this->assertSame('Cold Pressed Golden Jojoba Oil (no. 233)', $s->name);
+        $this->assertSame(ProductCategory::CarrierOil, $s->category);
+        $this->assertSame(500.0, $s->quantity);
+    }
+
+    public function test_gtin_check_digit(): void
+    {
+        $this->assertTrue(Barcode::isGtin('5055416391889'));
+        $this->assertTrue(Barcode::isGtin('885909950805'));
+        $this->assertTrue(Barcode::isGtin('40123455'));
+        $this->assertFalse(Barcode::isGtin('60204656'), 'doTERRA item number is not an EAN-8');
+        $this->assertFalse(Barcode::isGtin('5055416391880'));
+        $this->assertFalse(Barcode::isGtin('AB-1234'));
+    }
+
+    public function test_code_hints_for_brand_article_numbers(): void
+    {
+        $doterra = (new CodeHints)->forCode('60204656');
+        $this->assertSame('doTERRA', $doterra?->brand);
+        $this->assertSame(ProductCategory::EssentialOil, $doterra->category);
+        $this->assertNull($doterra->name);
+
+        $this->assertSame('Naissance', (new CodeHints)->forCode('5055416391889')?->brand);
+        $this->assertNull((new CodeHints)->forCode('4260123456788'));
+    }
+
+    public function test_code_hints_from_qr_links(): void
+    {
+        $hints = new CodeHints;
+
+        $breathe = $hints->forCode('https://www.doterra.com/US/en/p/breathe-oil');
+        $this->assertSame('doTERRA', $breathe?->brand);
+        $this->assertSame('Breathe', $breathe->name);
+
+        // Random tokens are not taken as a name, the brand still is.
+        $token = $hints->forCode('https://doterra.me/a8F3kQ2');
+        $this->assertSame('doTERRA', $token?->brand);
+        $this->assertNull($token->name);
+
+        $this->assertSame('Golden Jojoba', $hints->forCode('www.naissance.com/products/golden-jojoba-oil')?->name);
+        $this->assertNull($hints->forCode('https://example.com/x7Y9'));
+        $this->assertNull($hints->forCode('Lot 4521'));
     }
 }

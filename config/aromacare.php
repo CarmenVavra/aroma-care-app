@@ -27,7 +27,8 @@ return [
     |
     | After scanning an unknown barcode, product data is looked up in public
     | databases (server-side, only the barcode number is sent). Sources are
-    | asked in this order: open_beauty_facts, open_food_facts, upcitemdb.
+    | asked in this order: open_beauty_facts, open_food_facts,
+    | open_products_facts, upcitemdb.
     |
     */
 
@@ -36,7 +37,7 @@ return [
         'timeout' => (int) env('PRODUCT_LOOKUP_TIMEOUT', 4),
         'sources' => array_values(array_filter(array_map('trim', explode(',', (string) env(
             'PRODUCT_LOOKUP_SOURCES',
-            'open_beauty_facts,open_food_facts,upcitemdb'
+            'open_beauty_facts,open_food_facts,open_products_facts,upcitemdb'
         ))))),
     ],
 

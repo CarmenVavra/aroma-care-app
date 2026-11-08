@@ -48,11 +48,25 @@ final class Barcode
     }
 
     /**
-     * EAN-8, UPC-A, EAN-13 or GTIN-14: only these are looked up in product databases.
+     * Valid EAN-8, UPC-A, EAN-13 or GTIN-14 (incl. check digit): only these are
+     * looked up in product databases. Brand article numbers such as doTERRA's
+     * "60204656" look like EAN-8 but fail the check digit.
      */
     public static function isGtin(string $code): bool
     {
-        return ctype_digit($code) && in_array(strlen($code), [8, 12, 13, 14], true);
+        if (! ctype_digit($code) || ! in_array(strlen($code), [8, 12, 13, 14], true)) {
+            return false;
+        }
+
+        $digits = array_map('intval', str_split(strrev($code)));
+        $sum = 0;
+
+        // From the right, without the check digit: weights 3, 1, 3, 1 …
+        foreach (array_slice($digits, 1) as $i => $digit) {
+            $sum += $digit * ($i % 2 === 0 ? 3 : 1);
+        }
+
+        return (10 - $sum % 10) % 10 === $digits[0];
     }
 
     /**

@@ -22,6 +22,7 @@ class ProductLookup
     public const SOURCES = [
         'open_beauty_facts' => 'Open Beauty Facts',
         'open_food_facts' => 'Open Food Facts',
+        'open_products_facts' => 'Open Products Facts',
         'upcitemdb' => 'UPCitemdb',
     ];
 
@@ -84,6 +85,7 @@ class ProductLookup
         return match ($source) {
             'open_beauty_facts' => $this->openFacts('https://world.openbeautyfacts.org', $code, self::SOURCES[$source]),
             'open_food_facts' => $this->openFacts('https://world.openfoodfacts.org', $code, self::SOURCES[$source]),
+            'open_products_facts' => $this->openFacts('https://world.openproductsfacts.org', $code, self::SOURCES[$source]),
             'upcitemdb' => $this->upcItemDb($code),
             default => null,
         };

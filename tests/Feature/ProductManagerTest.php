@@ -52,13 +52,13 @@ class ProductManagerTest extends TestCase
 
     public function test_search_matches_effect_tags_and_barcode(): void
     {
-        Product::factory()->for($this->user)->essentialOil()->create(['name' => 'Lavendel', 'barcode' => '4260123456785']);
+        Product::factory()->for($this->user)->essentialOil()->create(['name' => 'Lavendel', 'barcode' => '4260123456788']);
         Product::factory()->for($this->user)->create(['name' => 'Vitamin E']);
 
         Livewire::test(ProductManager::class)
             ->set('search', 'Beruhigend')
             ->assertSee('Lavendel')->assertDontSee('Vitamin E')
-            ->set('search', '4260123456785')
+            ->set('search', '4260123456788')
             ->assertSee('Lavendel')->assertDontSee('Vitamin E');
     }
 
@@ -151,10 +151,10 @@ class ProductManagerTest extends TestCase
 
     public function test_barcode_must_be_unique_among_active_products(): void
     {
-        Product::factory()->for($this->user)->create(['barcode' => '4260123456785']);
+        Product::factory()->for($this->user)->create(['barcode' => '4260123456788']);
 
         Livewire::test(ProductManager::class)
-            ->call('createProduct', '4260123456785')
+            ->call('createProduct', '4260123456788')
             ->set('currentProduct.name', 'Duplikat')
             ->set('currentProduct.quantity', '10')
             ->call('saveProduct')
@@ -210,10 +210,10 @@ class ProductManagerTest extends TestCase
 
     public function test_scanned_known_barcode_opens_detail_view(): void
     {
-        $product = Product::factory()->for($this->user)->essentialOil()->create(['name' => 'Lavendel', 'barcode' => '4260123456785']);
+        $product = Product::factory()->for($this->user)->essentialOil()->create(['name' => 'Lavendel', 'barcode' => '4260123456788']);
 
         Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', ' 4260123456785 ')
+            ->call('handleScannedBarcode', ' 4260123456788 ')
             ->assertSet('selectedProductId', $product->id)
             ->assertSet('openedByScan', true)
             ->assertSet('isModalOpen', false)

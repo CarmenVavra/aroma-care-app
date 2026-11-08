@@ -61,7 +61,7 @@
             <form x-show="mode === 'manual'" @submit.prevent="submitManual()" class="mx-auto mt-auto mb-6 w-full max-w-sm">
                 <label for="manual-barcode" class="mb-2 block text-sm font-semibold text-white/85">Barcode eingeben</label>
                 <input id="manual-barcode" x-ref="manualInput" x-model="manualCode" type="text" inputmode="numeric"
-                    autocomplete="off" maxlength="512" placeholder="z. B. 4260123456785"
+                    autocomplete="off" maxlength="512" placeholder="z. B. 4260123456788"
                     class="h-12 w-full rounded-xl border border-white/25 bg-white/10 px-4 text-base text-white placeholder:text-white/50">
                 <button type="submit" :disabled="manualCode.trim() === ''"
                     class="mt-3 h-[54px] w-full rounded-2xl bg-sky-300 font-bold text-navy-900 disabled:opacity-50">

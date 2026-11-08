@@ -98,9 +98,9 @@
         <p>
             <strong>Produktdaten-Suche:</strong> Ist ein gescannter Barcode noch nicht in deinem Bestand, fragt
             der Server von AromaCare – nicht dein Gerät – bei öffentlichen Produktdatenbanken nach Name, Marke
-            und Füllmenge: <em>Open Beauty Facts</em> und <em>Open Food Facts</em> (Open Food Facts, Frankreich)
+            und Füllmenge: <em>Open Beauty Facts</em>, <em>Open Food Facts</em> und <em>Open Products Facts</em> (Open Food Facts, Frankreich)
             sowie <em>UPCitemdb</em> (USA). Dabei wird <strong>ausschließlich die Barcode-Nummer</strong>
-            übermittelt, keine Angaben zu dir, deinem Konto oder deinem Bestand und nicht deine IP-Adresse.
+            übermittelt, und nur bei gültigen EAN/UPC-Nummern (keine Links aus QR-Codes, keine Artikelnummern), keine Angaben zu dir, deinem Konto oder deinem Bestand und nicht deine IP-Adresse.
             Ein Barcode ist eine Produktnummer und kein personenbezogenes Datum. Die Ergebnisse werden bis zu
             30 Tage auf dem Server zwischengespeichert. Die gefundenen Daten sind nur ein Vorschlag, den du vor
             dem Speichern prüfst.

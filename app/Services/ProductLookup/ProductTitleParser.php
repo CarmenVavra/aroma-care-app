@@ -93,6 +93,13 @@ class ProductTitleParser
             $name = (string) preg_replace('/'.preg_quote($brand, '/').'/iu', '', $name);
         }
 
+        // Shop titles append marketing text: "Golden Jojoba Oil 500ml - Pure & Natural, Vegan, …".
+        $chunks = array_values(array_filter(
+            array_map('trim', preg_split('/\s+[-–|]\s+|,\s+/u', $name) ?: []),
+            fn (string $chunk) => $chunk !== '',
+        ));
+        $name = $chunks[0] ?? $name;
+
         $name = (string) preg_replace([
             '/\d+(?:[.,]\d+)?\s*(ml|g|fl\.?\s*oz|oz)\b/iu',
             '/\b(essential oil|ätherisches öl|100\s*%\s*(pure|naturrein)?)\b/iu',

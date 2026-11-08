@@ -8,6 +8,7 @@ use App\Livewire\Forms\ProductForm;
 use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\User;
+use App\Services\ProductLookup\CodeHints;
 use App\Services\ProductLookup\ProductLookup;
 use App\Services\RecipeStockMatcher;
 use App\Support\Barcode;
@@ -286,8 +287,10 @@ class ProductManager extends Component
         }
 
         $variants = Barcode::variants($code);
-        // Only real product numbers are sent to product databases (never links or other QR content).
-        $lookup = fn () => Barcode::isGtin($code) ? app(ProductLookup::class)->find($variants) : null;
+        // Only valid EAN/UPC numbers are sent to product databases (never links, article numbers or other
+        // QR content). Without a hit, brand hints are taken from the code itself (e.g. doTERRA item numbers).
+        $lookup = fn () => (Barcode::isGtin($code) ? app(ProductLookup::class)->find($variants) : null)
+            ?? app(CodeHints::class)->forCode($code);
         $product = $this->userProducts()->whereIn('barcode', $variants)->first();
 
         if ($product !== null) {
@@ -329,12 +332,14 @@ class ProductManager extends Component
             return;
         }
 
-        // 2. Public product databases.
+        // 2. Public product databases, 3. hints from the code itself.
         $suggestion = $lookup();
 
         if ($suggestion !== null && $this->currentProduct->applySuggestion($suggestion)) {
             $this->suggestionSource = $suggestion->source;
-            $this->dispatch('notify', message: "Produktdaten aus {$suggestion->source} übernommen – bitte prüfen.");
+            $this->dispatch('notify', message: $suggestion->hasName()
+                ? "Produktdaten aus {$suggestion->source} übernommen – bitte prüfen."
+                : 'Marke aus dem Code erkannt – bitte Namen und Menge ergänzen.');
 
             return;
         }

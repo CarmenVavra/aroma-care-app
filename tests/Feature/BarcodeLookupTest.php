@@ -37,6 +37,7 @@ class BarcodeLookupTest extends TestCase
         Http::fake([
             'world.openbeautyfacts.org/*' => Http::response(['status' => 0]),
             'world.openfoodfacts.org/*' => Http::response(['status' => 0]),
+            'world.openproductsfacts.org/*' => Http::response(['status' => 0]),
             'api.upcitemdb.com/*' => Http::response(['code' => 'OK', 'total' => count($items), 'items' => $items]),
         ]);
     }
@@ -46,9 +47,9 @@ class BarcodeLookupTest extends TestCase
         $this->fakeNotFoundExceptUpc([['title' => 'doTERRA Lavender Essential Oil - 15 mL', 'brand' => 'doTERRA']]);
 
         Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', '812345678905')
+            ->call('handleScannedBarcode', '812345678901')
             ->assertSet('isModalOpen', true)
-            ->assertSet('currentProduct.barcode', '812345678905')
+            ->assertSet('currentProduct.barcode', '812345678901')
             ->assertSet('currentProduct.name', 'Lavender')
             ->assertSet('currentProduct.brand', 'doTERRA')
             ->assertSet('currentProduct.category', 'essential_oil')
@@ -68,7 +69,7 @@ class BarcodeLookupTest extends TestCase
         ]);
 
         Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', '4260123456785')
+            ->call('handleScannedBarcode', '4260123456788')
             ->assertSet('currentProduct.name', 'Jojobaöl Bio')
             ->assertSet('currentProduct.brand', 'Primavera')
             ->assertSet('currentProduct.category', 'carrier_oil')
@@ -76,7 +77,7 @@ class BarcodeLookupTest extends TestCase
             ->assertSet('suggestionSource', 'Open Beauty Facts');
 
         Http::assertSentCount(1);
-        Http::assertSent(fn (Request $request) => str_contains($request->url(), '/api/v2/product/4260123456785')
+        Http::assertSent(fn (Request $request) => str_contains($request->url(), '/api/v2/product/4260123456788')
             && str_contains($request->header('User-Agent')[0], 'AromaCare'));
     }
 
@@ -84,9 +85,9 @@ class BarcodeLookupTest extends TestCase
     {
         $this->fakeNotFoundExceptUpc();
 
-        app(ProductLookup::class)->find(['812345678905', '0812345678905']);
+        app(ProductLookup::class)->find(['812345678901', '0812345678901']);
 
-        Http::assertSent(fn (Request $request) => str_contains($request->url(), 'openbeautyfacts.org/api/v2/product/0812345678905'));
+        Http::assertSent(fn (Request $request) => str_contains($request->url(), 'openbeautyfacts.org/api/v2/product/0812345678901'));
     }
 
     public function test_no_data_found_still_opens_form_with_barcode(): void
@@ -94,9 +95,9 @@ class BarcodeLookupTest extends TestCase
         $this->fakeNotFoundExceptUpc();
 
         Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', '4260123456785')
+            ->call('handleScannedBarcode', '4260123456788')
             ->assertSet('isModalOpen', true)
-            ->assertSet('currentProduct.barcode', '4260123456785')
+            ->assertSet('currentProduct.barcode', '4260123456788')
             ->assertSet('currentProduct.name', '')
             ->assertSet('suggestionSource', null)
             ->assertDispatched('notify', message: 'Neuer Code – keine Produktdaten gefunden. Bitte Produkt erfassen.');
@@ -106,10 +107,10 @@ class BarcodeLookupTest extends TestCase
     {
         $this->fakeNotFoundExceptUpc();
 
-        app(ProductLookup::class)->find(['4260123456785']);
-        app(ProductLookup::class)->find(['4260123456785']);
+        app(ProductLookup::class)->find(['4260123456788']);
+        app(ProductLookup::class)->find(['4260123456788']);
 
-        Http::assertSentCount(3); // one round over the three sources, then the cached miss
+        Http::assertSentCount(4); // one round over the four sources, then the cached miss
     }
 
     public function test_unreachable_database_does_not_break_the_scan(): void
@@ -117,15 +118,16 @@ class BarcodeLookupTest extends TestCase
         Http::fake([
             'world.openbeautyfacts.org/*' => fn () => throw new ConnectionException('timeout'),
             'world.openfoodfacts.org/*' => Http::response(['status' => 0]),
+            'world.openproductsfacts.org/*' => Http::response(['status' => 0]),
             'api.upcitemdb.com/*' => Http::response([], 429),
         ]);
 
         Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', '4260123456785')
+            ->call('handleScannedBarcode', '4260123456788')
             ->assertSet('isModalOpen', true)
-            ->assertSet('currentProduct.barcode', '4260123456785');
+            ->assertSet('currentProduct.barcode', '4260123456788');
 
-        $this->assertNull(Cache::get('product-lookup:v2:4260123456785'), 'a miss with unreachable sources must not be cached');
+        $this->assertNull(Cache::get('product-lookup:v2:4260123456788'), 'a miss with unreachable sources must not be cached');
     }
 
     public function test_lookup_can_be_disabled(): void
@@ -133,7 +135,7 @@ class BarcodeLookupTest extends TestCase
         config(['aromacare.lookup.enabled' => false]);
 
         Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', '4260123456785')
+            ->call('handleScannedBarcode', '4260123456788')
             ->assertSet('isModalOpen', true);
 
         Http::assertNothingSent();
@@ -142,13 +144,13 @@ class BarcodeLookupTest extends TestCase
     public function test_previously_deleted_product_is_taken_over_without_lookup(): void
     {
         $old = Product::factory()->for($this->user)->essentialOil()->create([
-            'name' => 'Lavendel', 'brand' => 'doTERRA', 'barcode' => '812345678905',
+            'name' => 'Lavendel', 'brand' => 'doTERRA', 'barcode' => '812345678901',
             'quantity' => 0.5, 'initial_quantity' => 15,
         ]);
         $old->delete();
 
         Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', '0812345678905')
+            ->call('handleScannedBarcode', '0812345678901')
             ->assertSet('currentProduct.id', null)
             ->assertSet('currentProduct.name', 'Lavendel')
             ->assertSet('currentProduct.brand', 'doTERRA')
@@ -168,19 +170,19 @@ class BarcodeLookupTest extends TestCase
             ->call('createProduct')
             ->set('currentProduct.category', 'carrier_oil')
             ->set('currentProduct.name', 'Mein Name')
-            ->call('handleScannedBarcode', '812345678905')
+            ->call('handleScannedBarcode', '812345678901')
             ->assertSet('currentProduct.name', 'Mein Name')
             ->assertSet('currentProduct.category', 'carrier_oil')
             ->assertSet('currentProduct.brand', 'doTERRA')
-            ->assertSet('currentProduct.barcode', '812345678905');
+            ->assertSet('currentProduct.barcode', '812345678901');
     }
 
     public function test_upc_scan_finds_product_stored_as_ean13(): void
     {
-        $product = Product::factory()->for($this->user)->create(['barcode' => '0812345678905', 'category' => ProductCategory::Wax]);
+        $product = Product::factory()->for($this->user)->create(['barcode' => '0812345678901', 'category' => ProductCategory::Wax]);
 
         Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', '812345678905')
+            ->call('handleScannedBarcode', '812345678901')
             ->assertSet('selectedProductId', $product->id)
             ->assertSet('isModalOpen', false);
 
@@ -189,10 +191,10 @@ class BarcodeLookupTest extends TestCase
 
     public function test_gs1_datamatrix_is_reduced_to_the_gtin(): void
     {
-        $product = Product::factory()->for($this->user)->create(['barcode' => '4260123456785']);
+        $product = Product::factory()->for($this->user)->create(['barcode' => '4260123456788']);
 
         Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', "]d2010426012345678510LOT\x1D17290101")
+            ->call('handleScannedBarcode', "]d2010426012345678810LOT\x1D17290101")
             ->assertSet('selectedProductId', $product->id);
     }
 
@@ -231,6 +233,50 @@ class BarcodeLookupTest extends TestCase
             ->call('handleScannedBarcode', str_repeat('a', 513))
             ->assertSet('isModalOpen', false)
             ->assertDispatched('notify', message: 'Es wurde kein lesbarer Code erkannt. Bitte erneut scannen.');
+    }
+
+    public function test_doterra_item_number_prefills_brand_without_asking_databases(): void
+    {
+        Livewire::test(ProductManager::class)
+            ->call('handleScannedBarcode', '60204656')
+            ->assertSet('isModalOpen', true)
+            ->assertSet('currentProduct.barcode', '60204656')
+            ->assertSet('currentProduct.brand', 'doTERRA')
+            ->assertSet('currentProduct.category', 'essential_oil')
+            ->assertSet('currentProduct.name', '')
+            ->assertSet('suggestionSource', 'dem Code')
+            ->assertDispatched('notify', message: 'Marke aus dem Code erkannt – bitte Namen und Menge ergänzen.');
+
+        // Not a valid EAN: no request (UPCitemdb would only answer "invalid" and use up the daily quota).
+        Http::assertNothingSent();
+    }
+
+    public function test_unknown_naissance_ean_gets_brand_from_company_prefix(): void
+    {
+        Http::fake([
+            'world.openbeautyfacts.org/*' => Http::response(['status' => 0]),
+            'world.openfoodfacts.org/*' => Http::response(['status' => 0]),
+            'world.openproductsfacts.org/*' => Http::response(['status' => 0]),
+            'api.upcitemdb.com/*' => Http::response(['code' => 'OK', 'total' => 0, 'items' => []]),
+        ]);
+
+        Livewire::test(ProductManager::class)
+            ->call('handleScannedBarcode', '5055416391889')
+            ->assertSet('currentProduct.brand', 'Naissance')
+            ->assertSet('currentProduct.name', '');
+
+        Http::assertSent(fn (Request $request) => str_contains($request->url(), 'openproductsfacts.org'));
+    }
+
+    public function test_breathe_qr_link_prefills_brand_and_name(): void
+    {
+        Livewire::test(ProductManager::class)
+            ->call('handleScannedBarcode', 'https://www.doterra.com/US/en/p/breathe-oil')
+            ->assertSet('currentProduct.brand', 'doTERRA')
+            ->assertSet('currentProduct.name', 'Breathe')
+            ->assertSet('currentProduct.category', 'essential_oil');
+
+        Http::assertNothingSent();
     }
 
     public function test_privacy_policy_mentions_the_lookup(): void

@@ -69,7 +69,6 @@ export default function barcodeScanner({ elementId = 'barcode-scanner-region' } 
         async open(mode = 'scan') {
             this.isOpen = true;
             this.manualCode = '';
-            document.documentElement.classList.add('overflow-hidden');
 
             await this.$nextTick();
             await this.setMode(mode);
@@ -78,7 +77,6 @@ export default function barcodeScanner({ elementId = 'barcode-scanner-region' } 
         async close() {
             this.isOpen = false;
             this.status = 'idle';
-            document.documentElement.classList.remove('overflow-hidden');
             await this.stopCamera();
         },
 
@@ -279,7 +277,6 @@ export default function barcodeScanner({ elementId = 'barcode-scanner-region' } 
         },
 
         destroy() {
-            document.documentElement.classList.remove('overflow-hidden');
             this.stopCamera();
         },
     };

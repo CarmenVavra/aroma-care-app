@@ -102,7 +102,7 @@
     {{-- Delete account: custom dialog with password confirmation --}}
     <div x-cloak x-show="confirmDeleteAccount" x-transition.opacity class="fixed inset-0 z-[80] grid place-items-center bg-night-900/60 p-4"
         @keydown.escape.window="confirmDeleteAccount = false">
-        <form x-show="confirmDeleteAccount" x-trap.noscroll="confirmDeleteAccount" wire:submit="deleteAccount" role="alertdialog"
+        <form x-show="confirmDeleteAccount" x-trap="confirmDeleteAccount" x-scroll-lock="confirmDeleteAccount" wire:submit="deleteAccount" role="alertdialog"
             aria-modal="true" aria-labelledby="delete-account-title" @click.outside="confirmDeleteAccount = false"
             class="w-full max-w-sm space-y-4 rounded-(--radius-card) bg-mist-50 p-6 shadow-soft dark:bg-night-800">
             @csrf

@@ -228,18 +228,6 @@ class ProductManager extends Component
         $this->dispatch('notify', message: "„{$product->name}“ wurde gelöscht.");
     }
 
-    /**
-     * Add one package to the stock (e.g. "Menge erhöhen · +15 ml" after a scan).
-     */
-    public function restockProduct(int $id): void
-    {
-        $product = $this->userProducts()->findOrFail($id);
-        $product->restock();
-
-        $this->refreshLists();
-        $this->dispatch('notify', message: "Bestand von „{$product->name}“ erhöht: {$product->formatted_quantity}.");
-    }
-
     public function showProduct(int $id): void
     {
         $this->selectedProductId = $id;

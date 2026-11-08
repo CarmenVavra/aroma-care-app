@@ -6,7 +6,7 @@
 --}}
 <div x-cloak x-show="{{ $show }}" x-transition.opacity class="fixed inset-0 z-[80] grid place-items-center bg-night-900/60 p-4"
     @keydown.escape.window="if ({{ $show }}) { {{ $onCancel }} }">
-    <div x-show="{{ $show }}" x-trap.noscroll="{{ $show }}" x-transition.scale.95 role="alertdialog" aria-modal="true"
+    <div x-show="{{ $show }}" x-trap="{{ $show }}" x-scroll-lock="{{ $show }}" x-transition.scale.95 role="alertdialog" aria-modal="true"
         aria-labelledby="confirm-dialog-title" aria-describedby="confirm-dialog-text"
         class="w-full max-w-sm rounded-(--radius-card) bg-mist-50 p-6 shadow-soft dark:bg-night-800"
         @click.outside="{{ $onCancel }}">

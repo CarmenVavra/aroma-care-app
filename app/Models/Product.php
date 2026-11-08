@@ -172,13 +172,4 @@ class Product extends Model
     {
         return rtrim(rtrim(number_format((float) $value, 2, ',', '.'), '0'), ',');
     }
-
-    /**
-     * Add one package (the initial quantity) to the stock, e.g. after scanning a new bottle.
-     */
-    public function restock(): void
-    {
-        $this->quantity = (float) $this->quantity + (float) $this->initial_quantity;
-        $this->save();
-    }
 }

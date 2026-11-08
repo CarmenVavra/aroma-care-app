@@ -8,6 +8,7 @@ use App\Livewire\ProductManager;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\File;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -199,13 +200,30 @@ class ProductManagerTest extends TestCase
         $this->assertSoftDeleted($product);
     }
 
-    public function test_restock_adds_one_package(): void
+    public function test_dialogs_use_the_counted_scroll_lock(): void
+    {
+        // x-trap.noscroll restores a remembered value and left the page locked after overlapping
+        // dialogs (scanner → detail sheet). All dialogs use x-scroll-lock instead.
+        $product = Product::factory()->for($this->user)->create();
+
+        Livewire::test(ProductManager::class)
+            ->call('showProduct', $product->id)
+            ->assertSeeHtml('x-scroll-lock')
+            ->assertDontSeeHtml('.noscroll');
+
+        foreach (File::allFiles(resource_path('views')) as $view) {
+            $this->assertStringNotContainsString('noscroll', $view->getContents(), $view->getPathname());
+        }
+    }
+
+    public function test_detail_view_has_no_restock_button(): void
     {
         $product = Product::factory()->for($this->user)->create(['quantity' => 2, 'initial_quantity' => 15]);
 
-        Livewire::test(ProductManager::class)->call('restockProduct', $product->id);
-
-        $this->assertEquals(17, $product->fresh()->quantity);
+        Livewire::test(ProductManager::class)
+            ->call('showProduct', $product->id)
+            ->assertSee('Produkt löschen')
+            ->assertDontSee('Menge erhöhen');
     }
 
     public function test_scanned_known_barcode_opens_detail_view(): void

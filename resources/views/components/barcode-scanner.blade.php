@@ -6,7 +6,7 @@
 --}}
 <div wire:ignore x-data="barcodeScanner({ elementId: 'barcode-scanner-region' })"
     @open-scanner.window="open($event.detail?.mode ?? 'scan')" @keydown.escape.window="isOpen && close()">
-    <div x-cloak x-show="isOpen" x-trap.noscroll="isOpen" role="dialog" aria-modal="true" aria-labelledby="scanner-title"
+    <div x-cloak x-show="isOpen" x-trap="isOpen" x-scroll-lock="isOpen" role="dialog" aria-modal="true" aria-labelledby="scanner-title"
         class="fixed inset-0 z-[60] overflow-hidden bg-night-900 text-white">
 
         {{-- Camera feed --}}

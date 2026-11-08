@@ -142,7 +142,7 @@
         <div wire:key="detail-{{ $product->id }}" class="fixed inset-0 z-40 bg-night-900/50 lg:hidden"
             wire:click="closeDetail" aria-hidden="true"></div>
 
-        <aside wire:key="detail-panel-{{ $product->id }}" x-data x-trap.noscroll.inert="window.innerWidth < 1024"
+        <aside wire:key="detail-panel-{{ $product->id }}" x-data x-trap.inert="window.innerWidth < 1024" x-scroll-lock="window.innerWidth < 1024"
             @keydown.escape.window="$wire.closeDetail()" role="dialog" aria-modal="true" aria-labelledby="detail-title"
             class="fixed inset-x-0 bottom-0 z-50 max-h-[92dvh] overflow-y-auto rounded-t-[28px] bg-mist-50 px-5 pt-3 pb-[max(env(safe-area-inset-bottom),1.5rem)] shadow-soft md:inset-x-auto md:top-0 md:right-0 md:max-h-none md:w-[420px] md:rounded-none md:border-l md:border-mist-300 md:px-7 md:pt-8 lg:sticky lg:top-0 lg:z-auto lg:h-dvh lg:shadow-none dark:bg-night-800 dark:md:border-white/10">
 
@@ -283,13 +283,7 @@
                 </a>
             @endif
 
-            <div class="mt-8 space-y-3">
-                @if ((float) $product->initial_quantity > 0)
-                    <button type="button" wire:click="restockProduct({{ $product->id }})" wire:loading.attr="disabled"
-                        class="h-[54px] w-full rounded-2xl bg-navy-900 text-base font-bold text-white hover:bg-navy-900/90 disabled:opacity-60 dark:bg-chalk dark:text-navy-900">
-                        Menge erhöhen · +{{ $product->formatted_initial_quantity }}
-                    </button>
-                @endif
+            <div class="mt-8">
                 <button type="button" @click="confirmDelete = {{ $product->id }}"
                     class="flex h-[50px] w-full items-center justify-center gap-2 rounded-2xl border-[1.5px] border-violet-700 font-semibold text-violet-700 hover:bg-violet-700/5 dark:border-violet-400 dark:text-violet-400">
                     <x-app-icon name="trash" class="size-4" /> Produkt löschen
@@ -304,7 +298,7 @@
     @if ($isModalOpen)
         <div class="fixed inset-0 z-50 bg-night-900/50 max-md:hidden" wire:click="closeModal" aria-hidden="true"></div>
 
-        <div x-data x-trap.noscroll="true" @keydown.escape.window="$wire.closeModal()" role="dialog" aria-modal="true"
+        <div x-data x-trap="true" x-scroll-lock @keydown.escape.window="$wire.closeModal()" role="dialog" aria-modal="true"
             aria-labelledby="form-title"
             class="fixed inset-0 z-50 flex flex-col bg-mist-100 md:inset-auto md:top-1/2 md:left-1/2 md:max-h-[90dvh] md:w-full md:max-w-xl md:-translate-x-1/2 md:-translate-y-1/2 md:overflow-hidden md:rounded-[28px] md:shadow-soft dark:bg-night-900">
 

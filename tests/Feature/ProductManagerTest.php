@@ -299,6 +299,18 @@ class ProductManagerTest extends TestCase
             ->assertSee('<script>alert(1)</script>');
     }
 
+    public function test_pagination_labels_are_translated(): void
+    {
+        app()->setLocale('de');
+        Product::factory()->for($this->user)->count((int) config('aromacare.per_page') + 1)->create();
+
+        Livewire::test(ProductManager::class)
+            ->assertSee('Weiter')
+            ->assertSee('Gehe zu Seite 2')
+            ->assertDontSee('pagination.next')
+            ->assertDontSee('pagination.previous');
+    }
+
     public function test_low_stock_filter(): void
     {
         Product::factory()->for($this->user)->create(['name' => 'Teebaum', 'quantity' => 2, 'initial_quantity' => 15]);

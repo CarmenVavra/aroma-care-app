@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="position:relative;width:100%;height:84px;padding:10px 12px 0;box-sizing:border-box;background:{{ bar }};border-top:1px solid {{ line }};display:flex;justify-content:space-around;align-items:flex-start;font-family:'DM Sans',system-ui,sans-serif">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:4px;width:88px">
+    <div style="width:52px;height:30px;border-radius:15px;background:{{ b0 }};display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;display:grid;grid-template-columns:1fr 1fr;gap:3px"><i style="border-radius:3px;background:{{ c0 }}"></i><i style="border-radius:3px;background:{{ c0 }}"></i><i style="border-radius:3px;background:{{ c0 }}"></i><i style="border-radius:3px;background:{{ c0 }}"></i></div></div>
+    <span style="white-space:nowrap;font-size:12px;font-weight:{{ w0 }};color:{{ c0 }}">Bestand</span>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:4px;width:88px">
+    <div style="width:54px;height:54px;margin-top:-26px;border-radius:50%;background:#84CEEB;border:4px solid {{ bar }};box-shadow:0 6px 16px rgba(136,96,208,.35);display:flex;align-items:center;justify-content:center;box-sizing:border-box"><div style="width:22px;height:22px;border:2.5px solid #1B2447;border-radius:6px;display:flex;align-items:center;justify-content:center;box-sizing:border-box"><div style="width:12px;height:2px;background:#1B2447"></div></div></div>
+    <span style="white-space:nowrap;font-size:12px;font-weight:600;color:{{ c1 }}">Scanner</span>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:4px;width:88px">
+    <div style="width:52px;height:30px;border-radius:15px;background:{{ b2 }};display:flex;align-items:center;justify-content:center"><div style="width:15px;height:18px;border:2px solid {{ c2 }};border-radius:4px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 2px;box-sizing:border-box"><div style="height:2px;background:{{ c2 }}"></div><div style="height:2px;background:{{ c2 }}"></div></div></div>
+    <span style="white-space:nowrap;font-size:12px;font-weight:{{ w2 }};color:{{ c2 }}">Rezept-Finder</span>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:4px;width:88px">
+    <div style="width:52px;height:30px;border-radius:15px;background:{{ b3 }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px"><div style="width:8px;height:8px;border-radius:50%;background:{{ c3 }}"></div><div style="width:16px;height:7px;border-radius:8px 8px 2px 2px;background:{{ c3 }}"></div></div>
+    <span style="white-space:nowrap;font-size:12px;font-weight:{{ w3 }};color:{{ c3 }}">Profil</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:84},&quot;active&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const a = Number(this.props.active ?? 0);
+    const d = this.props.dark === true || this.props.dark === 'true';
+    const on = d ? '#A9C0F5' : '#1B2447', off = d ? '#9AA3C4' : '#4E5876';
+    const pill = d ? 'rgba(169,192,245,.16)' : '#DCE5FB';
+    const v = { bar: d ? '#1A2140' : '#FAFBFF', line: d ? 'rgba(255,255,255,.09)' : '#D6DCF0' };
+    for (let i = 0; i < 4; i++) {
+      v['c' + i] = i === a ? on : off;
+      v['b' + i] = i === a ? pill : 'transparent';
+      v['w' + i] = i === a ? 700 : 500;
+    }
+    v.c1 = d ? '#E6E9F7' : '#1B2447';
+    return v;
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="position:relative;width:390px;height:800px;border-radius:40px;overflow:hidden;background:{{ t.bg }};box-shadow:0 0 0 8px #1A1F33,0 24px 48px rgba(27,36,71,.28);font-family:'DM Sans',system-ui,sans-serif;color:{{ t.ink }}">
+  <div style="height:44px;padding:14px 28px 0;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600"><span>9:41</span><div style="width:24px;height:12px;border:1.5px solid {{ t.ink }};border-radius:4px;box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:{{ t.ink }};border-radius:1px"></div></div></div>
+  <div style="padding:10px 20px 0;display:flex;justify-content:space-between;align-items:flex-start">
+    <div><div style="font-size:14px;color:{{ t.muted }}">Guten Abend, Anna</div><div style="font-family:'Newsreader',Georgia,serif;font-size:36px;line-height:1.1;font-weight:500;letter-spacing:-.01em">Bestand</div></div>
+    <div style="width:44px;height:44px;border-radius:50%;background:{{ t.chipOnBg }};color:{{ t.chipOnFg }};display:flex;align-items:center;justify-content:center;font-weight:700">A</div>
+  </div>
+  <div style="margin:14px 20px 0;height:48px;border-radius:14px;background:{{ t.surf }};border:1px solid {{ t.line }};display:flex;align-items:center;gap:10px;padding:0 14px;box-sizing:border-box">
+    <div style="position:relative;width:18px;height:18px"><div style="width:11px;height:11px;border:2px solid {{ t.muted }};border-radius:50%"></div><div style="position:absolute;right:0;bottom:3px;width:7px;height:2px;background:{{ t.muted }};transform:rotate(45deg)"></div></div>
+    <span style="flex:1;font-size:15px;color:{{ t.muted }}">Öl, Wirkung oder Barcode suchen</span>
+    <div style="width:32px;height:32px;border-radius:9px;background:{{ t.tileBg }};display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center"><div style="width:14px;height:2px;background:{{ t.ink }}"></div><div style="width:10px;height:2px;background:{{ t.ink }}"></div><div style="width:6px;height:2px;background:{{ t.ink }}"></div></div>
+  </div>
+  <div style="display:flex;gap:8px;padding:14px 20px 0;overflow:hidden;white-space:nowrap">
+    <sc-for list="{{ chips }}" as="c" hint-placeholder-count="5"><div style="flex:none;height:38px;padding:0 14px;border-radius:19px;background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.bd }};font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;box-sizing:border-box">{{ c.label }}<span style="font-weight:500;opacity:.8">{{ c.n }}</span></div></sc-for>
+  </div>
+  <div style="margin:14px 20px 0;height:44px;border-radius:12px;background:{{ lv.low.bg }};color:{{ lv.low.fg }};display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:14px;font-weight:600"><span>3 Produkte fast leer</span><span>Liste ›</span></div>
+  <div style="padding:6px 20px 0;display:flex;flex-direction:column">
+    <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+      <div style="display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid {{ t.line }}">
+        <div style="flex:none;width:48px;height:48px;border-radius:14px;background:{{ r.tbg }};color:{{ r.tfg }};display:flex;align-items:center;justify-content:center;font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:600">{{ r.ini }}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:16px;font-weight:600">{{ r.name }}</div>
+          <div style="font-size:13px;color:{{ t.muted }};margin-top:1px">{{ r.meta }}</div>
+          <div style="height:4px;border-radius:2px;background:{{ t.line }};margin-top:7px;overflow:hidden"><div style="width:{{ r.pct }}%;height:100%;background:{{ r.bar }};border-radius:2px"></div></div>
+        </div>
+        <div style="flex:none;text-align:right"><div style="display:inline-block;padding:4px 10px;border-radius:12px;background:{{ r.bg }};color:{{ r.fg }};font-size:12px;font-weight:700">{{ r.label }}</div><div style="font-size:13px;color:{{ t.muted }};margin-top:4px">{{ r.amt }}</div></div>
+      </div>
+    </sc-for>
+  </div>
+  <dc-import name="BottomNav" active="0" dark="{{ dark }}" style="position:absolute;left:0;right:0;bottom:0" hint-size="100%,84px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:800},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const d = this.props.dark === true || this.props.dark === 'true';
+    const t = d
+      ? { bg: '#11162B', surf: '#1A2140', line: 'rgba(255,255,255,.1)', ink: '#E6E9F7', muted: '#A9B2D0', chipOnBg: '#A9C0F5', chipOnFg: '#11162B', tileBg: 'rgba(255,255,255,.08)' }
+      : { bg: '#F1F4FB', surf: '#FAFBFF', line: '#D6DCF0', ink: '#1B2447', muted: '#4E5876', chipOnBg: '#1B2447', chipOnFg: '#F1F4FB', tileBg: '#E8ECF8' };
+    const lv = d
+      ? { ok: { bg: 'rgba(86,128,233,.18)', fg: '#A9C0F5', bar: '#6F96F0' }, mid: { bg: 'rgba(132,206,235,.18)', fg: '#A8DEF3', bar: '#84CEEB' }, low: { bg: 'rgba(136,96,208,.28)', fg: '#CDB7F5', bar: '#A98BE0' } }
+      : { ok: { bg: '#DCE5FB', fg: '#1E3A8A', bar: '#5680E9' }, mid: { bg: '#D6EEF9', fg: '#14507A', bar: '#84CEEB' }, low: { bg: '#DCCFF3', fg: '#3F1F85', bar: '#8860D0' } };
+    const cat = d
+      ? { e: ['#A9C0F5'], b: ['#B79DF0'], w: ['#8FB0F5'], a: ['#C1C8E4'] }
+      : { e: ['#3558C2', '#DFF1FA'], b: ['#4B2E8F', '#E6E0F6'], w: ['#1E3A8A', '#DDE6FB'], a: ['#4E5876', '#E3E6F2'] };
+    const tile = k => d ? { fg: cat[k][0], bg: cat[k][0] + '26' } : { fg: cat[k][0], bg: cat[k][1] };
+    const data = [
+      ['Lavendel', 'La', 'e', 'doTERRA · 15 ml', 80, 'ok', 'Voll', '12 ml'],
+      ['Pfefferminze', 'Pf', 'e', 'doTERRA · 15 ml', 27, 'mid', 'Mittel', '4 ml'],
+      ['Teebaum', 'Te', 'e', 'doTERRA · 15 ml', 13, 'low', 'Fast leer', '2 ml'],
+      ['Jojobaöl', 'Jo', 'b', 'Basisöl · bio · 100 ml', 85, 'ok', 'Voll', '85 ml'],
+      ['Süßmandelöl', 'Sü', 'b', 'Basisöl · 250 ml', 40, 'mid', 'Mittel', '100 ml'],
+      ['Bienenwachs', 'Bw', 'w', 'Wachs · Pastillen', 62, 'ok', 'Voll', '155 g']
+    ];
+    const rows = data.map(r => { const l = lv[r[5]], tl = tile(r[2]); return { name: r[0], ini: r[1], meta: r[3], pct: r[4], label: r[6], amt: r[7], bg: l.bg, fg: l.fg, bar: l.bar, tbg: tl.bg, tfg: tl.fg }; });
+    const chips = [['Alle', 48], ['Ätherische Öle', 27], ['Basisöle', 12], ['Wachse', 4], ['Additive', 5]].map((c, i) => ({ label: c[0], n: c[1], bg: i === 0 ? t.chipOnBg : t.surf, fg: i === 0 ? t.chipOnFg : t.ink, bd: i === 0 ? t.chipOnBg : t.line }));
+    return { t, lv, rows, chips, dark: d };
+  }
+}
+</script>
+</body>
+</html>

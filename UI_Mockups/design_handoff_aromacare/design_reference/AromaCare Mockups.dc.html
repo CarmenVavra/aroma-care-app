@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#E6E9F3;font-family:'DM Sans',system-ui,sans-serif}a{color:#3558C2}a:hover{color:#1B2447}</style>
+</helmet>
+<section id="t1" style="padding:40px 44px 40px;width:1700px;box-sizing:border-box">
+  <div style="display:flex;align-items:baseline;gap:10px;margin:0 0 22px">
+    <a href="#t1" style="font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none">1</a>
+    <span style="font:600 13px/1.2 'DM Sans',sans-serif;color:#1a1a1a">AromaCare · Design System, mobile Kernscreens, Desktop, Tailwind</span>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:36px 28px;align-items:flex-start">
+
+  <div id="1a" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px">
+    <div style="display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'DM Sans',sans-serif;color:rgba(0,0,0,.6)"><a href="#1a" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none">1a</a>Design System</div>
+    <div style="width:1644px;box-sizing:border-box;background:#FAFBFF;border:1px solid #D6DCF0;border-radius:20px;padding:40px;color:#1B2447;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid #D6DCF0;padding-bottom:24px">
+        <div><div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5B3AA6">Design System · v1</div><div style="font-family:'Newsreader',Georgia,serif;font-size:56px;font-weight:500;line-height:1.05;letter-spacing:-.01em;margin-top:6px">AromaCare</div></div>
+        <div style="max-width:620px;font-size:15px;line-height:1.6;color:#4E5876">Ruhig, warm, hochwertig: Nebel-Töne als Fläche, Himmelblau als Struktur, Navy für Text und Primäraktionen, Kobalt und Violett als sparsame Akzente. Zahlen und Status sind nie nur über Farbe codiert.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.1fr .9fr 1fr;gap:48px;padding-top:32px">
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6;margin-bottom:14px">Farbpalette · Tailwind-Token</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px">
+            <sc-for list="{{ swatches }}" as="s" hint-placeholder-count="16">
+              <div style="display:flex;gap:12px;align-items:center"><div style="flex:none;width:44px;height:44px;border-radius:12px;background:{{ s.hex }};border:1px solid rgba(27,36,71,.15)"></div><div style="min-width:0"><div style="font-size:14px;font-weight:600">{{ s.name }}</div><div style="font:11px/1.4 ui-monospace,Menlo,monospace;color:#4E5876;white-space:nowrap">{{ s.token }} · {{ s.hex }}</div><div style="font-size:12px;line-height:1.4;color:#4E5876;white-space:nowrap">{{ s.use }}</div></div></div>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6;margin-bottom:14px">Typografie</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:56px;line-height:1.05;font-weight:500">Lavendel</div>
+          <div style="font:11px ui-monospace,Menlo,monospace;color:#4E5876;margin:4px 0 16px">font-display · Newsreader 500 · Titel, Ölnamen</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:24px;font-style:italic;color:#3558C2">Lavandula angustifolia</div>
+          <div style="font:11px ui-monospace,Menlo,monospace;color:#4E5876;margin:4px 0 16px">Newsreader italic · botanische Namen</div>
+          <div style="font-size:16px;line-height:1.5">DM Sans 400/500 · Fließtext 16 px, Zeilenhöhe 1.5, Listen 15–16 px.</div>
+          <div style="font:11px ui-monospace,Menlo,monospace;color:#4E5876;margin:4px 0 16px">font-sans · DM Sans · UI &amp; Body</div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6">Abschnitts-Label 12 / 700</div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6;margin:30px 0 12px">Kontrast (WCAG)</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;border-radius:10px;background:#F1F4FB"><span>Navy 900 auf Nebel 100</span><b>13,6 : 1 · AAA</b></div>
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;border-radius:10px;background:#F1F4FB;color:#4E5876"><span>Sekundärtext auf Nebel 100</span><b>6,4 : 1 · AA</b></div>
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;border-radius:10px;background:#F1F4FB;color:#5B3AA6"><span>Violett 700 (Akzenttext)</span><b>7,3 : 1 · AAA</b></div>
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;border-radius:10px;background:#84CEEB"><span>Navy 900 auf Himmel 300</span><b>8,6 : 1 · AAA</b></div>
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;border-radius:10px;background:#11162B;color:#E6E9F7"><span>Dark: Kreide auf Night 900</span><b>14,6 : 1 · AAA</b></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6;margin-bottom:14px">Komponenten</div>
+          <div style="font-size:13px;color:#4E5876;margin-bottom:8px">Bestands-Badges</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px"><span style="padding:5px 12px;border-radius:12px;background:#DCE5FB;color:#1E3A8A;font-size:12px;font-weight:700">Voll</span><span style="padding:5px 12px;border-radius:12px;background:#D6EEF9;color:#14507A;font-size:12px;font-weight:700">Mittel</span><span style="padding:5px 12px;border-radius:12px;background:#DCCFF3;color:#3F1F85;font-size:12px;font-weight:700">Fast leer</span></div>
+          <div style="font-size:13px;color:#4E5876;margin-bottom:8px">Wirkungs-Tags · psychisch / körperlich</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px"><span style="padding:6px 14px;border-radius:16px;background:#DFF1FA;color:#1E3A8A;font-size:14px">Beruhigend</span><span style="padding:6px 14px;border-radius:16px;background:#DFF1FA;color:#1E3A8A;font-size:14px">Ausgleichend</span><span style="padding:6px 14px;border-radius:16px;background:#E6E0F6;color:#4B2E8F;font-size:14px">Entspannend</span></div>
+          <div style="font-size:13px;color:#4E5876;margin-bottom:8px">Buttons</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px"><span style="padding:0 20px;height:48px;border-radius:14px;background:#1B2447;color:#F1F4FB;font-size:15px;font-weight:600;display:flex;align-items:center">Speichern</span><span style="padding:0 20px;height:48px;border-radius:14px;background:#84CEEB;color:#1B2447;font-size:15px;font-weight:700;display:flex;align-items:center">Scannen</span><span style="padding:0 20px;height:48px;border-radius:14px;border:1.5px solid #1B2447;box-sizing:border-box;color:#1B2447;font-size:15px;font-weight:600;display:flex;align-items:center">Manuell</span></div>
+          <div style="font-size:13px;color:#4E5876;margin-bottom:8px">Komedogenitäts-Skala 0–5</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px">
+            <sc-for list="{{ dsComedo }}" as="cm" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:6px"><sc-for list="{{ cm.dots }}" as="d" hint-placeholder-count="5"><span style="width:28px;height:28px;border-radius:50%;background:{{ d.bg }};color:{{ d.fg }};border:1px solid {{ d.bd }};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">{{ d.n }}</span></sc-for><span style="margin-left:8px;font-size:13px;font-weight:600">{{ cm.label }}</span></div>
+            </sc-for>
+          </div>
+          <div style="font-size:13px;color:#4E5876;margin-bottom:8px">Raster &amp; Form</div>
+          <div style="font-size:14px;line-height:1.6">8-px-Raster · Karten-Radius 20 · Inputs 12–14 · Chips voll rund · Tap-Ziele ≥ 44 px · Schatten nur sehr weich · Dark Mode über <span style="font-family:ui-monospace,Menlo,monospace;font-size:12.5px">.dark</span>-Klasse mit Night-Tönen.</div>
+        </div>
+      </div>
+      <div style="margin-top:32px;padding-top:24px;border-top:1px solid #D6DCF0;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;font-size:14px;line-height:1.6;color:#4E5876">
+        <div><b style="color:#1B2447">Annahmen</b><br>App-Name laut Titel „AromaCare“ (im Text auch „NaturaStock“ – austauschbar). Alle Produktdaten sind Beispiele; Komedogenitäts- und Wirkungsangaben bitte vor Livegang fachlich prüfen.</div>
+        <div><b style="color:#1B2447">PWA &amp; Navigation</b><br>Mobil: Sticky Bottom-Nav mit hervorgehobenem Scanner-Button; Scanner öffnet als Vollbild-Modal ohne Nav. Desktop: Sidebar + Listen-/Detail-Split. Kamera über BarcodeDetector-API, Fallback ZXing.</div>
+        <div><b style="color:#1B2447">Dynamische Felder</b><br>Kategorie-Wahl im Formular blendet via Livewire (<span style="font-family:ui-monospace,Menlo,monospace;font-size:12.5px">wire:model.live</span>) das passende Feldset ein: Ätherisches Öl oder Basisöl. Wachs/Additiv nutzen nur die Basisfelder.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="1b" style="flex:none;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px;width:390px">
+    <div style="display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'DM Sans',sans-serif;color:rgba(0,0,0,.6)"><a href="#1b" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none">1b</a>Dashboard / Bestandsliste</div>
+    <dc-import name="BestandScreen" dark="{{ false }}" hint-size="390px,800px"></dc-import>
+    <p style="margin:0;font-size:12.5px;line-height:1.55;color:rgba(0,0,0,.62)">Begrüßung + Titel, Suche mit Filter-Button, horizontal scrollbare Kategorie-Chips mit Zähler, Warnband für Niedrigbestand, Liste mit Kategorie-Kachel, Füllbalken und Text-Badge (Voll / Mittel / Fast leer).</p>
+  </div>
+
+  <div id="1c" style="flex:none;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px;width:390px">
+    <div style="display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'DM Sans',sans-serif;color:rgba(0,0,0,.6)"><a href="#1c" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none">1c</a>Barcode-Scanner · Vollbild-Modal</div>
+    <div style="position:relative;width:390px;height:800px;border-radius:40px;overflow:hidden;background:#0D1226;box-shadow:0 0 0 8px #1A1F33,0 24px 48px rgba(27,36,71,.28);font-family:'DM Sans',system-ui,sans-serif;color:#fff">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#19203A 0 14px,#141A30 14px 28px)"></div>
+      <div style="position:absolute;left:0;right:0;top:250px;text-align:center;font:12px ui-monospace,Menlo,monospace;color:rgba(255,255,255,.28)">Kamera-Livebild</div>
+      <div style="position:absolute;left:55px;top:170px;width:280px;height:170px;border-radius:18px;box-shadow:0 0 0 900px rgba(8,12,28,.68)">
+        <div style="position:absolute;left:40px;right:40px;top:40px;height:90px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.5) 0 2px,transparent 2px 5px,rgba(255,255,255,.5) 5px 6px,transparent 6px 11px,rgba(255,255,255,.5) 11px 14px,transparent 14px 18px)"></div>
+        <div style="position:absolute;left:10px;right:10px;top:84px;height:2px;background:#84CEEB;box-shadow:0 0 16px 3px rgba(132,206,235,.7)"></div>
+        <div style="position:absolute;left:-2px;top:-2px;width:38px;height:38px;border-left:4px solid #84CEEB;border-top:4px solid #84CEEB;border-radius:18px 0 0 0"></div>
+        <div style="position:absolute;right:-2px;top:-2px;width:38px;height:38px;border-right:4px solid #84CEEB;border-top:4px solid #84CEEB;border-radius:0 18px 0 0"></div>
+        <div style="position:absolute;left:-2px;bottom:-2px;width:38px;height:38px;border-left:4px solid #84CEEB;border-bottom:4px solid #84CEEB;border-radius:0 0 0 18px"></div>
+        <div style="position:absolute;right:-2px;bottom:-2px;width:38px;height:38px;border-right:4px solid #84CEEB;border-bottom:4px solid #84CEEB;border-radius:0 0 18px 0"></div>
+      </div>
+      <div style="position:absolute;left:0;right:0;top:0;height:44px;padding:14px 28px 0;box-sizing:border-box;display:flex;justify-content:space-between;font-size:14px;font-weight:600"><span>9:41</span><span></span></div>
+      <div style="position:absolute;left:20px;right:20px;top:60px;display:flex;justify-content:space-between;align-items:center">
+        <div style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1">×</div>
+        <div style="font-size:17px;font-weight:600">Barcode scannen</div>
+        <div style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center"><div style="width:10px;height:18px;border:2px solid #fff;border-radius:3px;box-sizing:border-box"></div></div>
+      </div>
+      <div style="position:absolute;left:0;right:0;top:360px;text-align:center"><div style="font-size:16px;font-weight:500">Barcode im Rahmen ausrichten</div><div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:4px">EAN-13 · EAN-8 · QR-Code</div></div>
+      <div style="position:absolute;left:0;right:0;top:432px;display:flex;justify-content:center"><div style="display:flex;padding:4px;border-radius:22px;background:rgba(255,255,255,.14)"><div style="padding:0 20px;height:36px;border-radius:18px;background:#84CEEB;color:#1B2447;font-size:14px;font-weight:700;display:flex;align-items:center">Scannen</div><div style="padding:0 20px;height:36px;border-radius:18px;color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center">Manuell</div></div></div>
+      <div style="position:absolute;left:0;right:0;bottom:0;height:278px;background:#FAFBFF;color:#1B2447;border-radius:28px 28px 0 0;padding:12px 20px 0;box-sizing:border-box">
+        <div style="width:40px;height:4px;border-radius:2px;background:#BCC5E3;margin:0 auto 16px"></div>
+        <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:12px;background:#DCE5FB;color:#1E3A8A;font-size:12px;font-weight:700">✓ Produkt erkannt</div>
+        <div style="display:flex;gap:14px;align-items:center;margin:14px 0 18px">
+          <div style="flex:none;width:56px;height:56px;border-radius:16px;background:#DFF1FA;color:#3558C2;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',Georgia,serif;font-size:24px;font-weight:600">La</div>
+          <div><div style="font-size:18px;font-weight:600">Lavendel · doTERRA</div><div style="font-size:13px;color:#4E5876;margin-top:2px">15 ml · EAN 4 260 123 456 785</div><div style="font-size:13px;color:#5B3AA6;font-weight:600;margin-top:2px">Bereits im Bestand: 1 Flasche</div></div>
+        </div>
+        <div style="height:54px;border-radius:16px;background:#1B2447;color:#F1F4FB;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">Menge erhöhen · +15 ml</div>
+        <div style="height:50px;margin-top:10px;border-radius:16px;border:1.5px solid #1B2447;box-sizing:border-box;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center">Als neues Produkt erfassen</div>
+      </div>
+    </div>
+    <p style="margin:0;font-size:12.5px;line-height:1.55;color:rgba(0,0,0,.62)">Vollbild ohne Bottom-Nav. Abgedunkelter Sucher mit hellblauen Ecken und Scanlinie, Taschenlampe, Modus-Umschalter. Erkanntes Produkt erscheint als Bottom-Sheet.</p>
+  </div>
+
+  <div id="1d" style="flex:none;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px;width:390px">
+    <div style="display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'DM Sans',sans-serif;color:rgba(0,0,0,.6)"><a href="#1d" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none">1d</a>Detail · Ätherisches Öl</div>
+    <div style="position:relative;width:390px;height:800px;border-radius:40px;overflow:hidden;background:#F1F4FB;box-shadow:0 0 0 8px #1A1F33,0 24px 48px rgba(27,36,71,.28);font-family:'DM Sans',system-ui,sans-serif;color:#1B2447">
+      <div style="height:44px;padding:14px 28px 0;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600"><span>9:41</span><div style="width:24px;height:12px;border:1.5px solid #1B2447;border-radius:4px;box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#1B2447;border-radius:1px"></div></div></div>
+      <div style="padding:4px 20px 0;display:flex;justify-content:space-between;align-items:center;height:48px">
+        <div style="width:44px;height:44px;border-radius:50%;background:#FAFBFF;border:1px solid #D6DCF0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;padding-bottom:3px">‹</div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6">Ätherisches Öl</div>
+        <div style="width:44px;height:44px;border-radius:50%;background:#FAFBFF;border:1px solid #D6DCF0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:18px">✎</div>
+      </div>
+      <div style="margin:8px 20px 0;display:flex;gap:16px;align-items:center">
+        <div style="flex:none;width:96px;height:116px;border-radius:18px;background:repeating-linear-gradient(135deg,#DFF1FA 0 8px,#CDE8F5 8px 16px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;color:#3558C2;text-align:center">Produktfoto<br>Flasche</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:34px;line-height:1.05;font-weight:500">Lavendel</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:16px;color:#3558C2;margin-top:2px">Lavandula angustifolia</div>
+          <div style="display:flex;gap:6px;margin-top:10px"><span style="padding:3px 10px;border-radius:10px;background:#1B2447;color:#F1F4FB;font-size:12px;font-weight:600">doTERRA</span><span style="padding:3px 10px;border-radius:10px;background:#DCE5FB;color:#1E3A8A;font-size:12px;font-weight:700">Voll</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:12px"><span style="color:#4E5876">Bestand</span><b>12 / 15 ml</b></div>
+          <div style="height:6px;border-radius:3px;background:#D6DCF0;margin-top:5px;overflow:hidden"><div style="width:80%;height:100%;background:#5680E9"></div></div>
+        </div>
+      </div>
+      <div style="padding:20px 20px 0">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6;margin-bottom:8px">Wirkung</div>
+        <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px"><span style="flex:none;width:58px;font-size:13px;color:#4E5876;padding-top:5px">Psyche</span><div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:5px 12px;border-radius:15px;background:#DFF1FA;color:#1E3A8A;font-size:14px">Beruhigend</span><span style="padding:5px 12px;border-radius:15px;background:#DFF1FA;color:#1E3A8A;font-size:14px">Ausgleichend</span><span style="padding:5px 12px;border-radius:15px;background:#DFF1FA;color:#1E3A8A;font-size:14px">Schlaffördernd</span></div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><span style="flex:none;width:58px;font-size:13px;color:#4E5876;padding-top:5px">Körper</span><div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:5px 12px;border-radius:15px;background:#E6E0F6;color:#4B2E8F;font-size:14px">Entspannend</span><span style="padding:5px 12px;border-radius:15px;background:#E6E0F6;color:#4B2E8F;font-size:14px">Hautberuhigend</span><span style="padding:5px 12px;border-radius:15px;background:#E6E0F6;color:#4B2E8F;font-size:14px">Muskellockernd</span></div></div>
+      </div>
+      <div style="padding:18px 20px 0">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><span style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6">Anwendung</span><span style="font-size:12px;color:#4E5876">Hautverdünnung 1–2 %</span></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="height:36px;padding:0 14px;border-radius:18px;background:#1B2447;color:#F1F4FB;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">✓ Verdampfen</span><span style="height:36px;padding:0 14px;border-radius:18px;background:#1B2447;color:#F1F4FB;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">✓ Hautpflege</span><span style="height:36px;padding:0 14px;border-radius:18px;background:#1B2447;color:#F1F4FB;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">✓ Badezusatz</span><span style="height:36px;padding:0 14px;border-radius:18px;border:1.5px solid #BCC5E3;box-sizing:border-box;color:#4E5876;font-size:14px;font-weight:500;display:flex;align-items:center">Inhalieren</span></div>
+      </div>
+      <div style="padding:18px 20px 0">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6;margin-bottom:8px">Beschwerden &amp; Rezeptideen</div>
+        <div style="background:#FAFBFF;border:1px solid #D6DCF0;border-radius:18px;overflow:hidden">
+          <div style="padding:0 16px;height:50px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600"><span>Einschlafprobleme</span><span style="display:flex;gap:10px;align-items:center;font-size:12px;color:#4E5876;font-weight:500">2 Rezepte <span style="font-size:14px;color:#1B2447">▴</span></span></div>
+          <div style="margin:0 12px 12px;padding:12px 14px;border-radius:14px;background:#F1F4FB">
+            <div style="font-size:15px;font-weight:600">Schlaf-Roll-on · 10 ml</div>
+            <div style="font-size:13px;color:#4E5876;margin-top:2px">6 Tr. Lavendel + 10 ml Jojobaöl</div>
+            <div style="display:flex;gap:6px;margin-top:8px"><span style="padding:3px 10px;border-radius:10px;background:#DFF1FA;color:#1E3A8A;font-size:12px;font-weight:600">≈ 1 % Verdünnung</span><span style="padding:3px 10px;border-radius:10px;background:#DCE5FB;color:#1E3A8A;font-size:12px;font-weight:700">✓ Alles vorrätig</span></div>
+          </div>
+          <div style="border-top:1px solid #D6DCF0;padding:0 16px;height:48px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600"><span>Verspannte Schultern</span><span style="font-size:14px">▾</span></div>
+        </div>
+      </div>
+      <dc-import name="BottomNav" active="0" style="position:absolute;left:0;right:0;bottom:0" hint-size="100%,84px"></dc-import>
+    </div>
+    <p style="margin:0;font-size:12.5px;line-height:1.55;color:rgba(0,0,0,.62)">Kopfkarte mit Foto-Slot und Bestand. Wirkung getrennt nach Psyche (blaue Tags) und Körper (violette Tags), Anwendungsarten als Toggle-Chips, Beschwerden als Akkordeon mit Rezeptkarte inkl. Bestandsabgleich.</p>
+  </div>
+
+  <div id="1e" style="flex:none;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px;width:390px">
+    <div style="display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'DM Sans',sans-serif;color:rgba(0,0,0,.6)"><a href="#1e" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none">1e</a>Detail · Basisöl <span style="color:rgba(0,0,0,.4)">(Tweaks: Komedogenität, Einzug)</span></div>
+    <div style="position:relative;width:390px;height:800px;border-radius:40px;overflow:hidden;background:#F1F4FB;box-shadow:0 0 0 8px #1A1F33,0 24px 48px rgba(27,36,71,.28);font-family:'DM Sans',system-ui,sans-serif;color:#1B2447">
+      <div style="height:44px;padding:14px 28px 0;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600"><span>9:41</span><div style="width:24px;height:12px;border:1.5px solid #1B2447;border-radius:4px;box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#1B2447;border-radius:1px"></div></div></div>
+      <div style="padding:4px 20px 0;display:flex;justify-content:space-between;align-items:center;height:48px">
+        <div style="width:44px;height:44px;border-radius:50%;background:#FAFBFF;border:1px solid #D6DCF0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;padding-bottom:3px">‹</div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6">Basisöl</div>
+        <div style="width:44px;height:44px;border-radius:50%;background:#FAFBFF;border:1px solid #D6DCF0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:18px">✎</div>
+      </div>
+      <div style="margin:8px 20px 0;display:flex;gap:16px;align-items:center">
+        <div style="flex:none;width:96px;height:104px;border-radius:18px;background:repeating-linear-gradient(135deg,#E6E0F6 0 8px,#D9D0F0 8px 16px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;color:#4B2E8F;text-align:center">Produktfoto<br>Flasche</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:34px;line-height:1.05;font-weight:500">Jojobaöl</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:16px;color:#3558C2;margin-top:2px">Simmondsia chinensis</div>
+          <div style="display:flex;gap:6px;margin-top:10px"><span style="padding:3px 10px;border-radius:10px;background:#E6E0F6;color:#4B2E8F;font-size:12px;font-weight:700">Bio · kaltgepresst</span><span style="padding:3px 10px;border-radius:10px;background:#DCE5FB;color:#1E3A8A;font-size:12px;font-weight:700">Voll</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:12px"><span style="color:#4E5876">Bestand</span><b>85 / 100 ml</b></div>
+          <div style="height:6px;border-radius:3px;background:#D6DCF0;margin-top:5px;overflow:hidden"><div style="width:85%;height:100%;background:#5680E9"></div></div>
+        </div>
+      </div>
+      <div style="margin:18px 20px 0;padding:16px;border-radius:20px;background:#FAFBFF;border:1px solid #D6DCF0">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6">Komedogenität</span><span style="font-size:15px"><b style="font-size:22px;font-family:'Newsreader',Georgia,serif">{{ comedoValue }}</b> / 5 · {{ comedoLabel }}</span></div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <sc-for list="{{ comedoDots }}" as="d" hint-placeholder-count="5"><div style="flex:1;height:36px;border-radius:18px;background:{{ d.bg }};color:{{ d.fg }};border:1px solid {{ d.bd }};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700">{{ d.n }}</div></sc-for>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#4E5876;margin-top:8px"><span>0 = verstopft keine Poren</span><span>5 = stark</span></div>
+      </div>
+      <div style="margin:12px 20px 0;padding:16px;border-radius:20px;background:#FAFBFF;border:1px solid #D6DCF0;display:flex;align-items:center;gap:18px">
+        <div style="flex:none;position:relative;width:128px;height:70px;overflow:hidden">
+          <div style="position:absolute;left:0;top:0;width:128px;height:128px;border-radius:50%;background:conic-gradient(from 270deg,#C1C8E4 0 60deg,#5AB9EA 60deg 120deg,#3558C2 120deg 180deg,transparent 180deg)"></div>
+          <div style="position:absolute;left:18px;top:18px;width:92px;height:92px;border-radius:50%;background:#FAFBFF"></div>
+          <div style="position:absolute;left:63px;top:14px;width:2px;height:50px;border-radius:1px;background:#1B2447;transform-origin:50% 100%;transform:rotate({{ needle }}deg)"></div>
+          <div style="position:absolute;left:57px;top:57px;width:14px;height:14px;border-radius:50%;background:#1B2447"></div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6">Einziehgeschwindigkeit</div>
+          <div style="font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:500;margin-top:2px">{{ speedLabel }}</div>
+          <div style="font-size:12px;color:#4E5876;display:flex;gap:10px;margin-top:2px"><span>Langsam</span><span>·</span><span>Mittel</span><span>·</span><span>Schnell</span></div>
+        </div>
+      </div>
+      <div style="padding:18px 20px 0">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6;margin-bottom:8px">Anwendungsgebiete</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="height:38px;padding:0 16px;border-radius:19px;background:#1B2447;color:#F1F4FB;font-size:14px;font-weight:600;display:flex;align-items:center">✓ Gesicht</span><span style="height:38px;padding:0 16px;border-radius:19px;background:#1B2447;color:#F1F4FB;font-size:14px;font-weight:600;display:flex;align-items:center">✓ Massage</span><span style="height:38px;padding:0 16px;border-radius:19px;background:#1B2447;color:#F1F4FB;font-size:14px;font-weight:600;display:flex;align-items:center">✓ Haare</span><span style="height:38px;padding:0 16px;border-radius:19px;border:1.5px solid #BCC5E3;box-sizing:border-box;color:#4E5876;font-size:14px;display:flex;align-items:center">Körper</span></div>
+      </div>
+      <dc-import name="BottomNav" active="0" style="position:absolute;left:0;right:0;bottom:0" hint-size="100%,84px"></dc-import>
+    </div>
+    <p style="margin:0;font-size:12.5px;line-height:1.55;color:rgba(0,0,0,.62)">Komedogenität als nummerierte Punktskala (Farbe + Zahl + Wort), Einziehgeschwindigkeit als Halbkreis-Tacho, Anwendungsgebiete als Chips.</p>
+  </div>
+
+  <div id="1f" style="flex:none;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px;width:390px">
+    <div style="display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'DM Sans',sans-serif;color:rgba(0,0,0,.6)"><a href="#1f" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none">1f</a>Erfassen · Kategorie „Ätherisches Öl“</div>
+    <div style="position:relative;width:390px;height:800px;border-radius:40px;overflow:hidden;background:#F1F4FB;box-shadow:0 0 0 8px #1A1F33,0 24px 48px rgba(27,36,71,.28);font-family:'DM Sans',system-ui,sans-serif;color:#1B2447">
+      <div style="height:44px;padding:14px 28px 0;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600"><span>9:41</span><div style="width:24px;height:12px;border:1.5px solid #1B2447;border-radius:4px;box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#1B2447;border-radius:1px"></div></div></div>
+      <div style="padding:4px 20px 0;display:flex;justify-content:space-between;align-items:center;height:48px">
+        <div style="width:44px;height:44px;display:flex;align-items:center;font-size:28px;line-height:1">×</div>
+        <div style="font-family:'Newsreader',Georgia,serif;font-size:22px;font-weight:500">Neues Produkt</div>
+        <div style="height:36px;padding:0 14px;border-radius:18px;background:#84CEEB;color:#1B2447;font-size:13px;font-weight:700;display:flex;align-items:center">Scannen</div>
+      </div>
+      <div style="margin:10px 20px 0;padding:4px;border-radius:14px;background:#E1E6F5;display:flex;gap:2px">
+        <div style="flex:1;height:40px;border-radius:11px;background:#FAFBFF;box-shadow:0 1px 3px rgba(27,36,71,.15);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">Äth. Öl</div>
+        <div style="flex:1;height:40px;border-radius:11px;color:#4E5876;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Basisöl</div>
+        <div style="flex:1;height:40px;border-radius:11px;color:#4E5876;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Wachs</div>
+        <div style="flex:1;height:40px;border-radius:11px;color:#4E5876;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Additiv</div>
+      </div>
+      <div style="padding:8px 20px 0;display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ fieldsA }}" as="f" hint-placeholder-count="2"><div><div style="font-size:12px;font-weight:600;color:#4E5876;margin-bottom:3px">{{ f.l }}</div><div style="height:42px;border-radius:12px;background:#FAFBFF;border:1px solid #BCC5E3;box-sizing:border-box;padding:0 14px;display:flex;align-items:center;font-size:16px">{{ f.v }}</div></div></sc-for>
+        <div style="display:flex;gap:10px"><div style="flex:1"><div style="font-size:12px;font-weight:600;color:#4E5876;margin-bottom:3px">Menge</div><div style="height:42px;border-radius:12px;background:#FAFBFF;border:1px solid #BCC5E3;box-sizing:border-box;padding:0 14px;display:flex;align-items:center;font-size:16px">15</div></div><div style="width:84px"><div style="font-size:12px;font-weight:600;color:#4E5876;margin-bottom:3px">Einheit</div><div style="height:42px;border-radius:12px;background:#FAFBFF;border:1px solid #BCC5E3;box-sizing:border-box;padding:0 12px;display:flex;align-items:center;justify-content:space-between;font-size:16px">ml <span style="font-size:12px">▾</span></div></div><div style="flex:1.2"><div style="font-size:12px;font-weight:600;color:#4E5876;margin-bottom:3px">Haltbar bis</div><div style="height:42px;border-radius:12px;background:#FAFBFF;border:1px solid #BCC5E3;box-sizing:border-box;padding:0 14px;display:flex;align-items:center;font-size:16px">03/2029</div></div></div>
+      </div>
+      <div style="margin:10px 20px 0;padding:12px 14px;border-radius:18px;background:#DFF1FA">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#1E3A8A;margin-bottom:10px"><span style="width:8px;height:8px;border-radius:50%;background:#3558C2"></span>Nur für ätherische Öle</div>
+        <div style="font-size:12px;font-weight:600;color:#1E3A8A;margin-bottom:4px">Botanischer Name</div>
+        <div style="height:40px;border-radius:12px;background:#FAFBFF;border:1px solid #C1C8E4;box-sizing:border-box;padding:0 14px;display:flex;align-items:center;font-size:16px;font-style:italic">Lavandula angustifolia</div>
+        <div style="font-size:12px;font-weight:600;color:#1E3A8A;margin:10px 0 4px">Wirkung · psychisch / körperlich</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="flex:none;white-space:nowrap;height:32px;padding:0 12px;border-radius:16px;background:#FAFBFF;font-size:13px;display:flex;align-items:center;gap:6px">Beruhigend <b>×</b></span><span style="flex:none;white-space:nowrap;height:32px;padding:0 12px;border-radius:16px;background:#FAFBFF;font-size:13px;display:flex;align-items:center;gap:6px">Ausgleichend <b>×</b></span><span style="flex:none;white-space:nowrap;height:32px;padding:0 12px;border-radius:16px;background:#E6E0F6;color:#4B2E8F;font-size:13px;display:flex;align-items:center;gap:6px">Entspannend <b>×</b></span><span style="flex:none;white-space:nowrap;height:32px;padding:0 12px;border-radius:16px;border:1.5px dashed #3558C2;box-sizing:border-box;color:#1E3A8A;font-size:13px;font-weight:600;display:flex;align-items:center">+ Tag</span></div>
+        <div style="font-size:12px;font-weight:600;color:#1E3A8A;margin:10px 0 4px">Anwendungsarten</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="height:34px;padding:0 12px;border-radius:17px;background:#1B2447;color:#F1F4FB;font-size:13px;font-weight:600;display:flex;align-items:center">✓ Verdampfen</span><span style="height:34px;padding:0 12px;border-radius:17px;background:#1B2447;color:#F1F4FB;font-size:13px;font-weight:600;display:flex;align-items:center">✓ Hautpflege</span><span style="height:34px;padding:0 12px;border-radius:17px;background:#FAFBFF;color:#1E3A8A;font-size:13px;font-weight:500;display:flex;align-items:center">Badezusatz</span></div>
+      </div>
+      <div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#FAFBFF;border-top:1px solid #D6DCF0;padding:14px 20px 0;box-sizing:border-box"><div style="height:54px;border-radius:16px;background:#1B2447;color:#F1F4FB;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">Speichern</div></div>
+    </div>
+    <p style="margin:0;font-size:12.5px;line-height:1.55;color:rgba(0,0,0,.62)">Segmented Control wählt die Kategorie. Basisfelder bleiben, darunter erscheint ein himmelblaues Feldset nur für ätherische Öle (Tag-Eingabe, Anwendungs-Toggles). „Scannen“ füllt Name, Marke und Barcode vor.</p>
+  </div>
+
+  <div id="1g" style="flex:none;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px;width:390px">
+    <div style="display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'DM Sans',sans-serif;color:rgba(0,0,0,.6)"><a href="#1g" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none">1g</a>Erfassen · Kategorie „Basisöl“</div>
+    <div style="position:relative;width:390px;height:800px;border-radius:40px;overflow:hidden;background:#F1F4FB;box-shadow:0 0 0 8px #1A1F33,0 24px 48px rgba(27,36,71,.28);font-family:'DM Sans',system-ui,sans-serif;color:#1B2447">
+      <div style="height:44px;padding:14px 28px 0;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600"><span>9:41</span><div style="width:24px;height:12px;border:1.5px solid #1B2447;border-radius:4px;box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#1B2447;border-radius:1px"></div></div></div>
+      <div style="padding:4px 20px 0;display:flex;justify-content:space-between;align-items:center;height:48px">
+        <div style="width:44px;height:44px;display:flex;align-items:center;font-size:28px;line-height:1">×</div>
+        <div style="font-family:'Newsreader',Georgia,serif;font-size:22px;font-weight:500">Neues Produkt</div>
+        <div style="height:36px;padding:0 14px;border-radius:18px;background:#84CEEB;color:#1B2447;font-size:13px;font-weight:700;display:flex;align-items:center">Scannen</div>
+      </div>
+      <div style="margin:10px 20px 0;padding:4px;border-radius:14px;background:#E1E6F5;display:flex;gap:2px">
+        <div style="flex:1;height:40px;border-radius:11px;color:#4E5876;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Äth. Öl</div>
+        <div style="flex:1;height:40px;border-radius:11px;background:#FAFBFF;box-shadow:0 1px 3px rgba(27,36,71,.15);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">Basisöl</div>
+        <div style="flex:1;height:40px;border-radius:11px;color:#4E5876;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Wachs</div>
+        <div style="flex:1;height:40px;border-radius:11px;color:#4E5876;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Additiv</div>
+      </div>
+      <div style="padding:8px 20px 0;display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ fieldsB }}" as="f" hint-placeholder-count="2"><div><div style="font-size:12px;font-weight:600;color:#4E5876;margin-bottom:3px">{{ f.l }}</div><div style="height:42px;border-radius:12px;background:#FAFBFF;border:1px solid #BCC5E3;box-sizing:border-box;padding:0 14px;display:flex;align-items:center;font-size:16px">{{ f.v }}</div></div></sc-for>
+        <div style="display:flex;gap:10px"><div style="flex:1"><div style="font-size:12px;font-weight:600;color:#4E5876;margin-bottom:3px">Menge</div><div style="height:42px;border-radius:12px;background:#FAFBFF;border:1px solid #BCC5E3;box-sizing:border-box;padding:0 14px;display:flex;align-items:center;font-size:16px">100</div></div><div style="width:84px"><div style="font-size:12px;font-weight:600;color:#4E5876;margin-bottom:3px">Einheit</div><div style="height:42px;border-radius:12px;background:#FAFBFF;border:1px solid #BCC5E3;box-sizing:border-box;padding:0 12px;display:flex;align-items:center;justify-content:space-between;font-size:16px">ml <span style="font-size:12px">▾</span></div></div><div style="flex:1.2"><div style="font-size:12px;font-weight:600;color:#4E5876;margin-bottom:3px">Haltbar bis</div><div style="height:42px;border-radius:12px;background:#FAFBFF;border:1px solid #BCC5E3;box-sizing:border-box;padding:0 14px;display:flex;align-items:center;font-size:16px">11/2027</div></div></div>
+      </div>
+      <div style="margin:10px 20px 0;padding:12px 14px;border-radius:18px;background:#E6E0F6">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4B2E8F;margin-bottom:10px"><span style="width:8px;height:8px;border-radius:50%;background:#84CEEB"></span>Nur für Basisöle</div>
+        <div style="font-size:12px;font-weight:600;color:#4B2E8F;margin-bottom:6px">Komedogenität (0–5)</div>
+        <div style="display:flex;justify-content:space-between"><div style="width:42px;height:42px;border-radius:50%;background:#FAFBFF;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center">0</div><div style="width:42px;height:42px;border-radius:50%;background:#FAFBFF;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center">1</div><div style="width:42px;height:42px;border-radius:50%;background:#1B2447;color:#F1F4FB;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center">2</div><div style="width:42px;height:42px;border-radius:50%;background:#FAFBFF;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center">3</div><div style="width:42px;height:42px;border-radius:50%;background:#FAFBFF;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center">4</div><div style="width:42px;height:42px;border-radius:50%;background:#FAFBFF;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center">5</div></div>
+        <div style="font-size:12px;font-weight:600;color:#4B2E8F;margin:10px 0 4px">Einziehgeschwindigkeit</div>
+        <div style="display:flex;padding:3px;border-radius:12px;background:#D5CCEE;gap:2px"><div style="flex:1;height:36px;border-radius:9px;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Langsam</div><div style="flex:1;height:36px;border-radius:9px;background:#FAFBFF;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(27,36,71,.15)">Mittel</div><div style="flex:1;height:36px;border-radius:9px;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Schnell</div></div>
+        <div style="font-size:12px;font-weight:600;color:#4B2E8F;margin:10px 0 4px">Anwendungsgebiete</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="height:34px;padding:0 12px;border-radius:17px;background:#1B2447;color:#F1F4FB;font-size:13px;font-weight:600;display:flex;align-items:center">✓ Gesicht</span><span style="height:34px;padding:0 12px;border-radius:17px;background:#1B2447;color:#F1F4FB;font-size:13px;font-weight:600;display:flex;align-items:center">✓ Massage</span><span style="height:34px;padding:0 12px;border-radius:17px;background:#FAFBFF;font-size:13px;display:flex;align-items:center">Haare</span><span style="height:34px;padding:0 12px;border-radius:17px;background:#FAFBFF;font-size:13px;display:flex;align-items:center">Körper</span></div>
+      </div>
+      <div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#FAFBFF;border-top:1px solid #D6DCF0;padding:14px 20px 0;box-sizing:border-box"><div style="height:54px;border-radius:16px;background:#1B2447;color:#F1F4FB;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">Speichern</div></div>
+    </div>
+    <p style="margin:0;font-size:12.5px;line-height:1.55;color:rgba(0,0,0,.62)">Gleiche Basisfelder, anderes Feldset: Komedogenität als 0–5-Stepper, Einziehgeschwindigkeit als Segmented Control, Anwendungsgebiete als Mehrfach-Chips. Violetter Ton signalisiert den Kategoriewechsel.</p>
+  </div>
+
+  <div id="1h" style="flex:none;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px;width:390px">
+    <div style="display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'DM Sans',sans-serif;color:rgba(0,0,0,.6)"><a href="#1h" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none">1h</a>Dark Mode · Bestandsliste</div>
+    <dc-import name="BestandScreen" dark="{{ true }}" hint-size="390px,800px"></dc-import>
+    <p style="margin:0;font-size:12.5px;line-height:1.55;color:rgba(0,0,0,.62)">Night-Töne statt reinem Schwarz, Kreide-Text, helles Blau als Akzent; Status-Badges nutzen transparente Tönungen mit aufgehellter Schrift.</p>
+  </div>
+
+  <div id="1i" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px">
+    <div style="display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'DM Sans',sans-serif;color:rgba(0,0,0,.6)"><a href="#1i" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none">1i</a>Desktop · Liste + Detail-Split</div>
+    <div style="display:flex;width:1644px;height:800px;border-radius:14px;overflow:hidden;background:#F1F4FB;color:#1B2447;font-family:'DM Sans',system-ui,sans-serif;box-shadow:0 0 0 1px rgba(0,0,0,.1),0 20px 40px rgba(27,36,71,.15)">
+      <div style="flex:none;width:236px;background:#1B2447;color:#F1F4FB;padding:28px 18px;box-sizing:border-box;display:flex;flex-direction:column;gap:6px">
+        <div style="font-family:'Newsreader',Georgia,serif;font-size:28px;font-weight:500;padding:0 10px 22px;display:flex;align-items:center;gap:10px"><span style="width:14px;height:14px;border-radius:0 50% 50% 50%;transform:rotate(-45deg);background:#84CEEB"></span>AromaCare</div>
+        <div style="height:46px;padding:0 14px;border-radius:12px;background:rgba(169,192,245,.18);font-size:15px;font-weight:700;display:flex;align-items:center">Bestand</div>
+        <div style="height:46px;padding:0 14px;border-radius:12px;font-size:15px;font-weight:500;display:flex;align-items:center;color:#CBD3EE">Scanner</div>
+        <div style="height:46px;padding:0 14px;border-radius:12px;font-size:15px;font-weight:500;display:flex;align-items:center;color:#CBD3EE">Rezept-Finder</div>
+        <div style="height:46px;padding:0 14px;border-radius:12px;font-size:15px;font-weight:500;display:flex;align-items:center;color:#CBD3EE">Profil</div>
+        <div style="flex:1"></div>
+        <div style="height:50px;border-radius:14px;background:#84CEEB;color:#1B2447;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center">+ Neues Produkt</div>
+        <div style="padding:14px 10px 0;font-size:13px;color:#B9C2E3;display:flex;justify-content:space-between"><span>Dark Mode</span><span>Aus</span></div>
+      </div>
+      <div style="flex:1;min-width:0;padding:32px 32px 0;box-sizing:border-box">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end"><div><div style="font-size:14px;color:#4E5876">48 Produkte · 3 fast leer</div><div style="font-family:'Newsreader',Georgia,serif;font-size:42px;font-weight:500;line-height:1.1">Bestand</div></div>
+          <div style="width:360px;height:46px;border-radius:14px;background:#FAFBFF;border:1px solid #D6DCF0;box-sizing:border-box;padding:0 16px;display:flex;align-items:center;font-size:15px;color:#4E5876">Öl, Wirkung oder Barcode suchen</div></div>
+        <div style="display:flex;gap:8px;margin:20px 0 18px"><span style="height:38px;padding:0 16px;border-radius:19px;background:#1B2447;color:#F1F4FB;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">Alle <span style="font-weight:500;opacity:.8">48</span></span><span style="height:38px;padding:0 16px;border-radius:19px;background:#FAFBFF;border:1px solid #D6DCF0;box-sizing:border-box;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">Ätherische Öle <span style="font-weight:500;color:#4E5876">27</span></span><span style="height:38px;padding:0 16px;border-radius:19px;background:#FAFBFF;border:1px solid #D6DCF0;box-sizing:border-box;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">Basisöle <span style="font-weight:500;color:#4E5876">12</span></span><span style="height:38px;padding:0 16px;border-radius:19px;background:#FAFBFF;border:1px solid #D6DCF0;box-sizing:border-box;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">Wachse <span style="font-weight:500;color:#4E5876">4</span></span><span style="height:38px;padding:0 16px;border-radius:19px;background:#FAFBFF;border:1px solid #D6DCF0;box-sizing:border-box;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">Additive <span style="font-weight:500;color:#4E5876">5</span></span></div>
+        <div style="background:#FAFBFF;border:1px solid #D6DCF0;border-radius:20px;overflow:hidden">
+          <div style="display:grid;grid-template-columns:56px 1.6fr 1fr 1.3fr 110px;gap:12px;padding:12px 20px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4E5876;border-bottom:1px solid #D6DCF0"><span></span><span>Produkt</span><span>Kategorie</span><span>Bestand</span><span style="text-align:right">Status</span></div>
+          <sc-for list="{{ drows }}" as="r" hint-placeholder-count="8">
+            <div style="display:grid;grid-template-columns:56px 1.6fr 1fr 1.3fr 110px;gap:12px;align-items:center;padding:11px 20px;border-bottom:1px solid #E8ECF8;background:{{ r.rowBg }}">
+              <div style="width:44px;height:44px;border-radius:12px;background:{{ r.tbg }};color:{{ r.tfg }};display:flex;align-items:center;justify-content:center;font-family:'Newsreader',Georgia,serif;font-size:19px;font-weight:600">{{ r.ini }}</div>
+              <div><div style="font-size:15px;font-weight:600">{{ r.name }}</div><div style="font-size:13px;color:#4E5876">{{ r.meta }}</div></div>
+              <div style="font-size:14px">{{ r.cat }}</div>
+              <div><div style="font-size:13px;margin-bottom:5px"><b>{{ r.amt }}</b></div><div style="height:5px;border-radius:3px;background:#D6DCF0;overflow:hidden;width:80%"><div style="width:{{ r.pct }}%;height:100%;background:{{ r.bar }}"></div></div></div>
+              <div style="text-align:right"><span style="display:inline-block;padding:4px 10px;border-radius:12px;background:{{ r.bg }};color:{{ r.fg }};font-size:12px;font-weight:700">{{ r.label }}</span></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="flex:none;width:420px;background:#FAFBFF;border-left:1px solid #D6DCF0;padding:32px 28px;box-sizing:border-box;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6">Ätherisches Öl</span><span style="height:36px;padding:0 14px;border-radius:12px;border:1.5px solid #1B2447;box-sizing:border-box;font-size:13px;font-weight:600;display:flex;align-items:center">✎ Bearbeiten</span></div>
+        <div style="display:flex;gap:16px;align-items:center;margin-top:16px">
+          <div style="flex:none;width:92px;height:110px;border-radius:16px;background:repeating-linear-gradient(135deg,#DFF1FA 0 8px,#CDE8F5 8px 16px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;color:#3558C2;text-align:center">Produktfoto</div>
+          <div><div style="font-family:'Newsreader',Georgia,serif;font-size:38px;line-height:1.05;font-weight:500">Lavendel</div><div style="font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:17px;color:#3558C2;margin-top:2px">Lavandula angustifolia</div><div style="font-size:13px;margin-top:10px"><b>12 / 15 ml</b> <span style="color:#4E5876">· doTERRA</span></div></div>
+        </div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6;margin:24px 0 8px">Wirkung</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:5px 12px;border-radius:15px;background:#DFF1FA;color:#1E3A8A;font-size:14px">Beruhigend</span><span style="padding:5px 12px;border-radius:15px;background:#DFF1FA;color:#1E3A8A;font-size:14px">Ausgleichend</span><span style="padding:5px 12px;border-radius:15px;background:#DFF1FA;color:#1E3A8A;font-size:14px">Schlaffördernd</span><span style="padding:5px 12px;border-radius:15px;background:#E6E0F6;color:#4B2E8F;font-size:14px">Entspannend</span><span style="padding:5px 12px;border-radius:15px;background:#E6E0F6;color:#4B2E8F;font-size:14px">Hautberuhigend</span></div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6;margin:22px 0 8px">Anwendung</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="height:36px;padding:0 14px;border-radius:18px;background:#1B2447;color:#F1F4FB;font-size:14px;font-weight:600;display:flex;align-items:center">✓ Verdampfen</span><span style="height:36px;padding:0 14px;border-radius:18px;background:#1B2447;color:#F1F4FB;font-size:14px;font-weight:600;display:flex;align-items:center">✓ Hautpflege</span><span style="height:36px;padding:0 14px;border-radius:18px;background:#1B2447;color:#F1F4FB;font-size:14px;font-weight:600;display:flex;align-items:center">✓ Badezusatz</span></div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B3AA6;margin:22px 0 8px">Beschwerden &amp; Rezeptideen</div>
+        <div style="background:#F1F4FB;border:1px solid #D6DCF0;border-radius:16px;overflow:hidden">
+          <div style="padding:0 16px;height:48px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600"><span>Einschlafprobleme</span><span style="font-size:14px">▴</span></div>
+          <div style="margin:0 12px 12px;padding:12px 14px;border-radius:12px;background:#FAFBFF"><div style="font-size:15px;font-weight:600">Schlaf-Roll-on · 10 ml</div><div style="font-size:13px;color:#4E5876;margin-top:2px">6 Tr. Lavendel + 10 ml Jojobaöl</div></div>
+          <div style="border-top:1px solid #D6DCF0;padding:0 16px;height:46px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600"><span>Verspannte Schultern</span><span style="font-size:14px">▾</span></div>
+          <div style="border-top:1px solid #D6DCF0;padding:0 16px;height:46px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600"><span>Gereizte Haut</span><span style="font-size:14px">▾</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="margin:0;width:1644px;font-size:12.5px;line-height:1.55;color:rgba(0,0,0,.62)">Dreispaltig ab ca. 1280 px: Sidebar-Navigation, Tabelle mit Bestandsbalken, rechts ein dauerhaft sichtbares Detailpanel (auf Tablet als Drawer). Scanner am Desktop: Webcam oder Foto-Upload.</p>
+  </div>
+
+  <div id="1j" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px">
+    <div style="display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'DM Sans',sans-serif;color:rgba(0,0,0,.6)"><a href="#1j" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none">1j</a>Tailwind v4 · Schlüsselkomponenten (Blade / Livewire / Alpine)</div>
+    <div style="width:1644px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <sc-for list="{{ codes }}" as="b" hint-placeholder-count="5">
+        <div style="min-width:0"><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><span style="font-size:14px;font-weight:700;color:#1B2447">{{ b.title }}</span><span style="font:12px ui-monospace,Menlo,monospace;color:#4E5876">{{ b.file }}</span></div><pre style="margin:0;background:#1B2447;color:#DFF1FA;border-radius:14px;padding:20px;font:12.5px/1.65 ui-monospace,Menlo,Consolas,monospace;overflow:auto;white-space:pre;tab-size:2">{{ b.code }}</pre></div>
+      </sc-for>
+    </div>
+  </div>
+
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;komedogenitaet&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:5,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Basisöl-Detail&quot;},&quot;einziehgeschwindigkeit&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;mittel&quot;,&quot;options&quot;:[&quot;langsam&quot;,&quot;mittel&quot;,&quot;schnell&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Basisöl-Detail&quot;}}">
+class Component extends DCLogic {
+  dots(v) {
+    return [1, 2, 3, 4, 5].map(n => {
+      if (n <= v) {
+        const bg = v <= 1 ? '#C1C8E4' : v <= 3 ? '#84CEEB' : '#A98BE0';
+        return { n, bg, fg: '#1B2447', bd: 'transparent' };
+      }
+      return { n, bg: '#F1F4FB', fg: '#4E5876', bd: '#BCC5E3' };
+    });
+  }
+  renderVals() {
+    const v = Math.max(0, Math.min(5, Math.round(Number(this.props.komedogenitaet ?? 2))));
+    const sp = this.props.einziehgeschwindigkeit || 'mittel';
+    const labels = ['nicht komedogen', 'sehr gering', 'gering', 'mäßig', 'hoch', 'sehr hoch'];
+    const swatches = [
+      ['Nebel 50', 'mist-50', '#FAFBFF', 'Karten, Oberflächen'], ['Nebel 100', 'mist-100', '#F1F4FB', 'App-Hintergrund'],
+      ['Nebel 300', 'mist-300', '#D6DCF0', 'Linien, Ränder'], ['Himmel 100', 'sky-100', '#DFF1FA', 'Tags, Flächen'],
+      ['Flieder 300', 'lilac-300', '#C1C8E4', 'Skala niedrig'], ['Himmel 300', 'sky-300', '#84CEEB', 'Scanner, Highlights'],
+      ['Azur 400', 'azure-400', '#5AB9EA', 'Tacho, Akzent'], ['Kobalt 500', 'cobalt-500', '#5680E9', 'Balken „Voll“'],
+      ['Kobalt 700', 'cobalt-700', '#3558C2', 'Tag-Text, Icons'], ['Navy 900', 'navy-900', '#1B2447', 'Text, Primäraktion'],
+      ['Violett 400', 'violet-400', '#A98BE0', 'Skala hoch'], ['Violett 500', 'violet-500', '#8860D0', 'Balken, Akzente'],
+      ['Violett 700', 'violet-700', '#5B3AA6', 'Akzent-Text'], ['Night 900', 'night-900', '#11162B', 'Dark: Hintergrund'],
+      ['Night 800', 'night-800', '#1A2140', 'Dark: Karten'], ['Kreide', 'chalk', '#E6E9F7', 'Dark: Text'], ['Hellblau', 'cobalt-200', '#A9C0F5', 'Dark: Akzent']
+    ].map(a => ({ name: a[0], token: a[1], hex: a[2], use: a[3] }));
+    const dsComedo = [[0, 'nicht komedogen'], [2, 'gering'], [4, 'hoch']].map(a => ({ label: a[0] + ' · ' + a[1], dots: this.dots(a[0]) }));
+    const cat = { e: ['#3558C2', '#DFF1FA', 'Ätherisches Öl'], b: ['#4B2E8F', '#E6E0F6', 'Basisöl'], w: ['#1E3A8A', '#DDE6FB', 'Wachs'], a: ['#4E5876', '#E3E6F2', 'Additiv'] };
+    const lv = { ok: ['#DCE5FB', '#1E3A8A', '#5680E9', 'Voll'], mid: ['#D6EEF9', '#14507A', '#84CEEB', 'Mittel'], low: ['#DCCFF3', '#3F1F85', '#8860D0', 'Fast leer'] };
+    const drows = [
+      ['Lavendel', 'La', 'e', 'doTERRA · 15 ml', 80, 'ok', '12 ml'], ['Pfefferminze', 'Pf', 'e', 'doTERRA · 15 ml', 27, 'mid', '4 ml'],
+      ['Teebaum', 'Te', 'e', 'doTERRA · 15 ml', 13, 'low', '2 ml'], ['Zitrone', 'Zi', 'e', 'doTERRA · 15 ml', 55, 'ok', '8 ml'],
+      ['Jojobaöl', 'Jo', 'b', 'bio · 100 ml', 85, 'ok', '85 ml'], ['Süßmandelöl', 'Sü', 'b', '250 ml', 40, 'mid', '100 ml'],
+      ['Bienenwachs', 'Bw', 'w', 'Pastillen', 62, 'ok', '155 g'], ['Vitamin E', 'VE', 'a', 'Tocopherol', 50, 'mid', '8 ml']
+    ].map((r, i) => ({ name: r[0], ini: r[1], meta: r[3], cat: cat[r[2]][2], pct: r[4], amt: r[6], tfg: cat[r[2]][0], tbg: cat[r[2]][1], bg: lv[r[5]][0], fg: lv[r[5]][1], bar: lv[r[5]][2], label: lv[r[5]][3], rowBg: i === 0 ? '#F1F4FB' : 'transparent' }));
+    const codes = [
+      { title: '1 · Theme-Tokens (Tailwind v4, CSS-first)', file: 'resources/css/app.css', code: `@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: "Newsreader", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+
+  --color-mist-50:   #FAFBFF;  /* Karten */
+  --color-mist-100:  #F1F4FB;  /* App-Hintergrund */
+  --color-mist-300:  #D6DCF0;  /* Linien */
+  --color-sky-100:   #DFF1FA;
+  --color-lilac-300:   #C1C8E4;
+  --color-azure-400:  #5AB9EA;
+  --color-cobalt-500:   #5680E9;
+  --color-cobalt-700:   #3558C2;  /* Kobalt */
+  --color-navy-900: #1B2447;  /* Text, Primary */
+  --color-sky-300:   #84CEEB;  /* Scanner */
+  --color-violet-400: #A98BE0;
+  --color-violet-500: #8860D0;
+  --color-violet-700: #5B3AA6;  /* Akzent-Text */
+  --color-night-900:  #11162B;
+  --color-night-800:  #1A2140;
+
+  --radius-card: 1.25rem;
+  --shadow-soft: 0 1px 2px rgb(27 36 71 / .06),
+                 0 8px 24px rgb(27 36 71 / .06);
+}
+
+body { @apply bg-mist-100 text-navy-900 font-sans antialiased
+              dark:bg-night-900 dark:text-[#E6E9F7]; }` },
+      { title: '2 · Komedogenitäts-Skala 0–5', file: 'components/comedo-scale.blade.php', code: `@props(['value' => 0])
+@php
+  $tone = match (true) {
+    $value <= 1 => 'bg-lilac-300',
+    $value <= 3 => 'bg-sky-300',
+    default     => 'bg-violet-400',
+  };
+@endphp
+
+<div class="flex items-center gap-1.5" role="img"
+     aria-label="Komedogenität {{ $value }} von 5">
+  @foreach (range(1, 5) as $i)
+    <span @class([
+      'grid size-8 place-items-center rounded-full text-sm font-bold',
+      "$tone text-navy-900" => $i <= $value,
+      'bg-mist-100 text-navy-900/60 ring-1 ring-inset ring-mist-300
+       dark:bg-night-800 dark:text-white/60 dark:ring-white/10' => $i > $value,
+    ])>{{ $i }}</span>
+  @endforeach
+  <span class="ml-2 text-sm font-semibold">{{ $value }}/5</span>
+</div>` },
+      { title: '3 · Einzieh-Tacho (Halbkreis)', file: 'components/speed-gauge.blade.php', code: `@props(['level' => 'mittel'])
+@php $deg = ['langsam' => -60, 'mittel' => 0, 'schnell' => 60][$level]; @endphp
+
+<div class="relative h-[4.4rem] w-32 overflow-hidden" role="img"
+     aria-label="Einziehgeschwindigkeit: {{ $level }}">
+  <div class="absolute top-0 size-32 rounded-full
+    bg-[conic-gradient(from_270deg,var(--color-lilac-300)_0_60deg,var(--color-azure-400)_60deg_120deg,var(--color-cobalt-700)_120deg_180deg,transparent_180deg)]"></div>
+  <div class="absolute left-[18px] top-[18px] size-[92px] rounded-full
+              bg-mist-50 dark:bg-night-800"></div>
+  <div class="absolute left-[63px] top-[14px] h-[50px] w-0.5 origin-bottom
+              rounded bg-navy-900 dark:bg-mist-100"
+       style="transform: rotate({{ $deg }}deg)"></div>
+  <div class="absolute left-[57px] top-[57px] size-3.5 rounded-full
+              bg-navy-900 dark:bg-mist-100"></div>
+</div>` },
+      { title: '4 · Öl-Detailkarte mit Wirkungs-Tags & Akkordeon', file: 'components/oil-card.blade.php', code: `<article class="rounded-(--radius-card) border border-mist-300 bg-mist-50 p-5
+                shadow-soft dark:border-white/10 dark:bg-night-800">
+  <h3 class="font-display text-3xl">{{ $oil->name }}</h3>
+  <p class="font-display italic text-cobalt-700 dark:text-lilac-300">{{ $oil->latin_name }}</p>
+
+  <h4 class="mt-5 mb-2 text-xs font-bold uppercase tracking-widest
+             text-violet-700 dark:text-sky-300">Wirkung</h4>
+  <ul class="flex flex-wrap gap-1.5">
+    @foreach ($oil->effects_mental as $tag)
+      <li class="rounded-full bg-sky-100 px-3 py-1 text-sm text-[#1E3A8A]
+                 dark:bg-lilac-300/15 dark:text-lilac-300">{{ $tag }}</li>
+    @endforeach
+    @foreach ($oil->effects_physical as $tag)
+      <li class="rounded-full bg-[#E6E0F6] px-3 py-1 text-sm text-[#4B2E8F]
+                 dark:bg-sky-300/20 dark:text-[#B79DF0]">{{ $tag }}</li>
+    @endforeach
+  </ul>
+
+  <div x-data="{ open: 0 }" class="mt-5 divide-y divide-mist-300 dark:divide-white/10">
+    @foreach ($oil->remedies as $i => $remedy)
+      <div>
+        <button type="button" class="flex min-h-12 w-full items-center justify-between font-semibold"
+                @click="open = open === {{ $i }} ? null : {{ $i }}"
+                :aria-expanded="open === {{ $i }}">
+          {{ $remedy->title }}
+          <span class="transition" :class="open === {{ $i }} && 'rotate-180'">▾</span>
+        </button>
+        <div x-show="open === {{ $i }}" x-collapse class="pb-4">
+          <x-recipe-card :recipe="$remedy->recipe" />
+        </div>
+      </div>
+    @endforeach
+  </div>
+</article>` },
+      { title: '5 · Bottom-Nav (PWA) & dynamische Felder', file: 'layouts/app + livewire/product-form', code: `{{-- Sticky Bottom-Nav, nur < md; Safe-Area für iOS-PWA --}}
+<nav class="fixed inset-x-0 bottom-0 z-40 md:hidden border-t border-mist-300
+            bg-mist-50/95 backdrop-blur pb-[env(safe-area-inset-bottom)]
+            dark:border-white/10 dark:bg-night-800/95">
+  <ul class="mx-auto grid max-w-md grid-cols-4 items-start px-3 pt-2">
+    <x-nav-item route="stock" label="Bestand" />
+    <li class="-mt-7 grid place-items-center">
+      <a href="{{ route('scanner') }}" aria-label="Scanner"
+         class="grid size-14 place-items-center rounded-full bg-sky-300 text-navy-900
+                ring-4 ring-mist-50 shadow-lg dark:ring-night-800">…</a>
+    </li>
+    <x-nav-item route="recipes" label="Rezept-Finder" />
+    <x-nav-item route="profile" label="Profil" />
+  </ul>
+</nav>
+
+{{-- Livewire: Feldset je Kategorie --}}
+<x-segmented wire:model.live="category" :options="$categories" />
+
+@if ($category === 'essential_oil')
+  @include('livewire.product.fields-essential')   {{-- bg-sky-100 --}}
+@elseif ($category === 'carrier_oil')
+  @include('livewire.product.fields-carrier')     {{-- bg-[#E6E0F6] --}}
+@endif` }
+    ];
+    return {
+      swatches, dsComedo, drows, codes,
+      comedoValue: v, comedoLabel: labels[v], comedoDots: this.dots(v),
+      needle: { langsam: -60, mittel: 0, schnell: 60 }[sp] ?? 0,
+      speedLabel: { langsam: 'Langsam', mittel: 'Mittel', schnell: 'Schnell' }[sp] || 'Mittel',
+      fieldsA: [{ l: 'Name *', v: 'Lavendel' }, { l: 'Marke', v: 'doTERRA' }],
+      fieldsB: [{ l: 'Name *', v: 'Jojobaöl' }, { l: 'Marke', v: 'Naturkosmetik-Händler' }]
+    };
+  }
+}
+</script>
+</body>
+</html>

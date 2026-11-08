@@ -1,0 +1,87 @@
+/* Self-hosted fonts (GDPR: no requests to Google servers) */
+@import '@fontsource/newsreader/500.css';
+@import '@fontsource/newsreader/500-italic.css';
+@import '@fontsource/dm-sans/400.css';
+@import '@fontsource/dm-sans/500.css';
+@import '@fontsource/dm-sans/600.css';
+@import '@fontsource/dm-sans/700.css';
+
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/livewire/livewire/src/Features/SupportPagination/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../../app/Enums/*.php';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-display: 'Newsreader', Georgia, serif;
+    --font-sans: 'DM Sans', system-ui, sans-serif;
+
+    --color-mist-50: #fafbff;
+    --color-mist-100: #f1f4fb;
+    --color-mist-300: #d6dcf0;
+    --color-line: #bcc5e3;
+    --color-segment: #e1e6f5;
+    --color-sky-100: #dff1fa;
+    --color-lilac-300: #c1c8e4;
+    --color-sky-300: #84ceeb;
+    --color-azure-400: #5ab9ea;
+    --color-cobalt-200: #a9c0f5;
+    --color-cobalt-500: #5680e9;
+    --color-cobalt-700: #3558c2;
+    --color-navy-900: #1b2447;
+    --color-muted: #4e5876;
+    --color-violet-400: #a98be0;
+    --color-violet-500: #8860d0;
+    --color-violet-700: #5b3aa6;
+    --color-night-900: #11162b;
+    --color-night-800: #1a2140;
+    --color-chalk: #e6e9f7;
+
+    --radius-card: 1.25rem;
+    --shadow-soft: 0 1px 2px rgb(27 36 71 / 0.06), 0 8px 24px rgb(27 36 71 / 0.06);
+
+    --animate-scanline: scanline 2s ease-in-out infinite;
+
+    @keyframes scanline {
+        0%,
+        100% {
+            top: 8%;
+        }
+        50% {
+            top: 92%;
+        }
+    }
+}
+
+@layer base {
+    body {
+        @apply bg-mist-100 font-sans text-navy-900 antialiased dark:bg-night-900 dark:text-chalk;
+    }
+
+    :focus-visible {
+        @apply outline-2 outline-offset-2 outline-cobalt-500;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+/* html5-qrcode injects a <video>; make it fill the fullscreen scanner. */
+#barcode-scanner-region video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-scanline {
+        animation: none;
+        top: 50%;
+    }
+}

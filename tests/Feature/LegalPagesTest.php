@@ -53,6 +53,26 @@ class LegalPagesTest extends TestCase
             ->assertDontSee('MStV');
     }
 
+    public function test_country_code_accepts_iso3_and_falls_back_to_germany(): void
+    {
+        $resolve = function (string $code): string {
+            putenv("LEGAL_COUNTRY_CODE={$code}");
+            $_ENV['LEGAL_COUNTRY_CODE'] = $_SERVER['LEGAL_COUNTRY_CODE'] = $code;
+
+            return (require config_path('legal.php'))['country_code'];
+        };
+
+        try {
+            $this->assertSame('AT', $resolve('aut'));
+            $this->assertSame('AT', $resolve('AT'));
+            $this->assertSame('DE', $resolve('DEU'));
+            $this->assertSame('DE', $resolve('xx'));
+        } finally {
+            putenv('LEGAL_COUNTRY_CODE');
+            unset($_ENV['LEGAL_COUNTRY_CODE'], $_SERVER['LEGAL_COUNTRY_CODE']);
+        }
+    }
+
     public function test_privacy_policy_renders_for_guests_and_users(): void
     {
         $this->get(route('legal.privacy'))

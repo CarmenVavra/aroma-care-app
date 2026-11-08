@@ -12,8 +12,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
+/**
+ * @property ProductCategory $category
+ * @property Carbon|null $expires_at
+ * @property-read int $fill_percent
+ * @property-read StockStatus $stock_status
+ * @property-read string $initials
+ * @property-read string $formatted_quantity
+ * @property-read string $formatted_initial_quantity
+ */
 class Product extends Model
 {
     /** @use HasFactory<ProductFactory> */
@@ -40,16 +50,19 @@ class Product extends Model
         ];
     }
 
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /** @return HasOne<EssentialOilDetail, $this> */
     public function essentialOilDetail(): HasOne
     {
         return $this->hasOne(EssentialOilDetail::class);
     }
 
+    /** @return HasOne<CarrierOilDetail, $this> */
     public function carrierOilDetail(): HasOne
     {
         return $this->hasOne(CarrierOilDetail::class);

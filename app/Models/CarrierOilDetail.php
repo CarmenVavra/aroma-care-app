@@ -6,6 +6,9 @@ use App\Enums\Absorption;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property Absorption|null $absorption
+ */
 class CarrierOilDetail extends Model
 {
     protected $fillable = [
@@ -41,6 +44,7 @@ class CarrierOilDetail extends Model
         };
     }
 
+    /** @return BelongsTo<Product, $this> */
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

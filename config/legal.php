@@ -24,7 +24,11 @@ return [
 
     'country' => env('LEGAL_COUNTRY', 'Deutschland'),
 
-    'country_code' => strtoupper((string) env('LEGAL_COUNTRY_CODE', 'DE')),
+    // DE or AT; also accepts ISO-3 codes (DEU/AUT). Decides which legal references are shown.
+    'country_code' => match (strtoupper(trim((string) env('LEGAL_COUNTRY_CODE', 'DE')))) {
+        'AT', 'AUT' => 'AT',
+        default => 'DE',
+    },
 
     'email' => env('LEGAL_EMAIL', 'kontakt@example.com'),
 

@@ -49,7 +49,7 @@ class BarcodeLookupTest extends TestCase
             ->call('handleScannedBarcode', '812345678905')
             ->assertSet('isModalOpen', true)
             ->assertSet('currentProduct.barcode', '812345678905')
-            ->assertSet('currentProduct.name', 'Lavendel')
+            ->assertSet('currentProduct.name', 'Lavender')
             ->assertSet('currentProduct.brand', 'doTERRA')
             ->assertSet('currentProduct.category', 'essential_oil')
             ->assertSet('currentProduct.quantity', '15')
@@ -99,7 +99,7 @@ class BarcodeLookupTest extends TestCase
             ->assertSet('currentProduct.barcode', '4260123456785')
             ->assertSet('currentProduct.name', '')
             ->assertSet('suggestionSource', null)
-            ->assertDispatched('notify', message: 'Neuer Barcode – keine Produktdaten gefunden. Bitte Produkt erfassen.');
+            ->assertDispatched('notify', message: 'Neuer Code – keine Produktdaten gefunden. Bitte Produkt erfassen.');
     }
 
     public function test_lookup_results_and_misses_are_cached(): void
@@ -125,7 +125,7 @@ class BarcodeLookupTest extends TestCase
             ->assertSet('isModalOpen', true)
             ->assertSet('currentProduct.barcode', '4260123456785');
 
-        $this->assertNull(Cache::get('product-lookup:v1:4260123456785'), 'a miss with unreachable sources must not be cached');
+        $this->assertNull(Cache::get('product-lookup:v2:4260123456785'), 'a miss with unreachable sources must not be cached');
     }
 
     public function test_lookup_can_be_disabled(): void
@@ -196,14 +196,41 @@ class BarcodeLookupTest extends TestCase
             ->assertSet('selectedProductId', $product->id);
     }
 
-    public function test_qr_code_with_plain_link_gets_a_helpful_message(): void
+    public function test_qr_code_with_link_becomes_the_product_code_and_is_found_again(): void
     {
-        Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', 'https://www.example.com/source-to-you?lot=ABC')
-            ->assertSet('isModalOpen', false)
-            ->assertDispatched('notify', message: 'Dieser QR-Code enthält nur einen Link, keinen Produktcode. Bitte scanne den Strichcode auf dem Etikett.');
+        $qr = 'https://www.example.com/source-to-you?lot=ABC&product=lavender_15ml';
 
+        Livewire::test(ProductManager::class)
+            ->call('handleScannedBarcode', $qr)
+            ->assertSet('isModalOpen', true)
+            ->assertSet('currentProduct.barcode', $qr)
+            ->set('currentProduct.name', 'Lavender')
+            ->set('currentProduct.quantity', '15')
+            ->call('saveProduct')
+            ->assertHasNoErrors();
+
+        // Links and other QR content are never sent to product databases.
         Http::assertNothingSent();
+
+        $product = Product::where('barcode', $qr)->firstOrFail();
+
+        Livewire::test(ProductManager::class)
+            ->call('handleScannedBarcode', $qr)
+            ->assertSet('selectedProductId', $product->id);
+    }
+
+    public function test_long_qr_content_is_accepted_up_to_the_limit(): void
+    {
+        $qr = 'https://www.example.com/'.str_repeat('a', 400);
+
+        Livewire::test(ProductManager::class)
+            ->call('handleScannedBarcode', $qr)
+            ->assertSet('currentProduct.barcode', $qr);
+
+        Livewire::test(ProductManager::class)
+            ->call('handleScannedBarcode', str_repeat('a', 513))
+            ->assertSet('isModalOpen', false)
+            ->assertDispatched('notify', message: 'Es wurde kein lesbarer Code erkannt. Bitte erneut scannen.');
     }
 
     public function test_privacy_policy_mentions_the_lookup(): void

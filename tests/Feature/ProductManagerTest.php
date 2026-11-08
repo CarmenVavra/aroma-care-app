@@ -250,12 +250,23 @@ class ProductManagerTest extends TestCase
             ->assertSet('currentProduct.barcode', '4006381333931');
     }
 
-    public function test_invalid_scanned_code_is_rejected(): void
+    public function test_empty_scan_is_rejected(): void
     {
         Livewire::test(ProductManager::class)
-            ->call('handleScannedBarcode', '<script>alert(1)</script>')
+            ->call('handleScannedBarcode', "  \n ")
             ->assertSet('isModalOpen', false)
             ->assertDispatched('notify', type: 'error');
+    }
+
+    public function test_html_in_qr_content_is_only_shown_escaped(): void
+    {
+        $product = Product::factory()->for($this->user)->create(['barcode' => '<script>alert(1)</script>']);
+
+        Livewire::test(ProductManager::class)
+            ->call('handleScannedBarcode', '<script>alert(1)</script>')
+            ->assertSet('selectedProductId', $product->id)
+            ->assertDontSeeHtml('<script>alert(1)</script>')
+            ->assertSee('<script>alert(1)</script>');
     }
 
     public function test_low_stock_filter(): void

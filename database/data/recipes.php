@@ -20,25 +20,25 @@
 |
 */
 
-$lavender = ['lavendel', 'lavandula angustifolia', 'lavandula officinalis'];
-$peppermint = ['pfefferminz', 'mentha piperita', 'mentha x piperita', 'mentha × piperita'];
-$teaTree = ['teebaum', 'melaleuca alternifolia'];
-$lemon = ['zitrone', 'citrus limon'];
+$lavender = ['lavendel', 'lavender', 'lavandula angustifolia', 'lavandula officinalis'];
+$peppermint = ['pfefferminz', 'peppermint', 'mentha piperita', 'mentha x piperita', 'mentha × piperita'];
+$teaTree = ['teebaum', 'tea tree', 'melaleuca', 'melaleuca alternifolia'];
+$lemon = ['zitrone', 'lemon', 'citrus limon'];
 $orange = ['orange', 'citrus sinensis'];
 $eucalyptus = ['eukalyptus', 'eucalyptus'];
-$rosemary = ['rosmarin', 'rosmarinus officinalis', 'salvia rosmarinus'];
-$frankincense = ['weihrauch', 'boswellia'];
-$cedarwood = ['zedernholz', 'zeder', 'cedrus'];
-$geranium = ['geranie', 'pelargonium'];
+$rosemary = ['rosmarin', 'rosemary', 'rosmarinus officinalis', 'salvia rosmarinus'];
+$frankincense = ['weihrauch', 'frankincense', 'boswellia'];
+$cedarwood = ['zedernholz', 'zeder', 'cedarwood', 'juniperus virginiana', 'cedrus'];
+$geranium = ['geranie', 'geranium', 'pelargonium'];
 $ylang = ['ylang', 'cananga odorata'];
 
 $jojoba = ['jojoba', 'simmondsia'];
-$almond = ['mandel', 'prunus dulcis', 'prunus amygdalus'];
+$almond = ['mandel', 'almond', 'prunus dulcis', 'prunus amygdalus'];
 $argan = ['argan'];
 $shea = ['shea', 'karité', 'karite', 'butyrospermum', 'vitellaria'];
-$beeswax = ['bienenwachs', 'cera alba'];
-$emulsifier = ['honig', 'sahne', 'milch', 'emulgator', 'salz'];
-$salt = ['salz'];
+$beeswax = ['bienenwachs', 'beeswax', 'cera alba'];
+$emulsifier = ['honig', 'sahne', 'milch', 'emulgator', 'salz', 'salt', 'honey'];
+$salt = ['salz', 'salt'];
 
 $diffuserSteps = [
     'Wassertank des Diffusers nach Herstellerangabe füllen.',

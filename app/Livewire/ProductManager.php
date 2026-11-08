@@ -277,19 +277,17 @@ class ProductManager extends Component
      */
     public function handleScannedBarcode(string $code): void
     {
-        $raw = $code;
-        $code = Barcode::normalize($raw);
+        $code = Barcode::normalize($code);
 
         if ($code === null) {
-            $message = Barcode::isUrl($raw)
-                ? 'Dieser QR-Code enthält nur einen Link, keinen Produktcode. Bitte scanne den Strichcode auf dem Etikett.'
-                : 'Der gescannte Code ist ungültig.';
-            $this->dispatch('notify', message: $message, type: 'error');
+            $this->dispatch('notify', message: 'Es wurde kein lesbarer Code erkannt. Bitte erneut scannen.', type: 'error');
 
             return;
         }
 
         $variants = Barcode::variants($code);
+        // Only real product numbers are sent to product databases (never links or other QR content).
+        $lookup = fn () => Barcode::isGtin($code) ? app(ProductLookup::class)->find($variants) : null;
         $product = $this->userProducts()->whereIn('barcode', $variants)->first();
 
         if ($product !== null) {
@@ -306,10 +304,10 @@ class ProductManager extends Component
             $this->resetValidation('currentProduct.barcode');
 
             // Only fill fields that are still empty; keep the category the user picked.
-            $suggestion = app(ProductLookup::class)->find($variants);
+            $suggestion = $lookup();
             $filled = $suggestion !== null && $this->currentProduct->applySuggestion($suggestion, withCategory: false);
             $this->suggestionSource = $filled ? $suggestion->source : $this->suggestionSource;
-            $this->dispatch('notify', message: $filled ? 'Barcode und Produktdaten übernommen – bitte prüfen.' : 'Barcode übernommen.');
+            $this->dispatch('notify', message: $filled ? 'Code und Produktdaten übernommen – bitte prüfen.' : 'Code übernommen.');
 
             return;
         }
@@ -332,7 +330,7 @@ class ProductManager extends Component
         }
 
         // 2. Public product databases.
-        $suggestion = app(ProductLookup::class)->find($variants);
+        $suggestion = $lookup();
 
         if ($suggestion !== null && $this->currentProduct->applySuggestion($suggestion)) {
             $this->suggestionSource = $suggestion->source;
@@ -341,7 +339,7 @@ class ProductManager extends Component
             return;
         }
 
-        $this->dispatch('notify', message: 'Neuer Barcode – keine Produktdaten gefunden. Bitte Produkt erfassen.');
+        $this->dispatch('notify', message: 'Neuer Code – keine Produktdaten gefunden. Bitte Produkt erfassen.');
     }
 
     public function render(): View

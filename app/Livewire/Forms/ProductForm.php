@@ -6,6 +6,7 @@ use App\Enums\Absorption;
 use App\Enums\ProductCategory;
 use App\Models\Product;
 use App\Services\ProductLookup\ProductSuggestion;
+use App\Support\Barcode;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -74,7 +75,7 @@ class ProductForm extends Form
             'name' => ['required', 'string', 'max:120'],
             'brand' => ['nullable', 'string', 'max:120'],
             'barcode' => [
-                'nullable', 'string', 'max:64', 'regex:/^[A-Za-z0-9\-\.\/: ]+$/',
+                'nullable', 'string', 'max:'.Barcode::MAX_LENGTH, 'regex:/^[^\x00-\x1F\x7F]+$/u',
                 Rule::unique('products', 'barcode')
                     ->ignore($this->id)
                     ->where('user_id', Auth::id())
@@ -114,7 +115,8 @@ class ProductForm extends Form
             'quantity.gt' => 'Die Menge muss größer als 0 sein.',
             'expires_at.regex' => 'Bitte im Format MM/JJJJ angeben, z. B. 03/2029.',
             'barcode.unique' => 'Dieser Barcode ist bereits einem Produkt zugeordnet.',
-            'barcode.regex' => 'Der Barcode enthält ungültige Zeichen.',
+            'barcode.regex' => 'Der Code enthält ungültige Steuerzeichen.',
+            'barcode.max' => 'Der Code ist zu lang (höchstens '.Barcode::MAX_LENGTH.' Zeichen).',
             'comedogenic_rating.between' => 'Die Komedogenität muss zwischen 0 und 5 liegen.',
         ];
     }

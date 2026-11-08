@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 /**
  * Turns free-text product data from public databases into form values,
  * e.g. "doTERRA Lavender Essential Oil - 15 mL" →
- * name "Lavendel", brand "doTERRA", 15 ml, essential oil, Lavandula angustifolia.
+ * name "Lavender", brand "doTERRA", 15 ml, essential oil, Lavandula angustifolia.
  */
 class ProductTitleParser
 {
@@ -25,13 +25,12 @@ class ProductTitleParser
         $brand = $this->cleanBrand($brand);
         $text = $title.' '.$quantity;
 
-        $oil = EssentialOilNames::find($title);
-        $category = $this->category($title, $oil !== null);
+        $latin = EssentialOilNames::botanicalName($title);
+        $category = $this->category($title, $latin !== null);
         [$amount, $unit] = $this->quantity((string) $quantity) ?? $this->quantity($title) ?? [null, null];
 
-        $name = $category === ProductCategory::EssentialOil && $oil !== null
-            ? $oil['name']
-            : $this->cleanName($title, $brand);
+        // Keep the name as printed on the bottle ("Lavender", "Tea Tree"), so the real bottle is easy to find.
+        $name = $this->cleanName($title, $brand);
 
         return new ProductSuggestion(
             source: $source,
@@ -40,7 +39,7 @@ class ProductTitleParser
             category: $category,
             quantity: $amount,
             unit: $unit ?? ($category === ProductCategory::Wax ? 'g' : null),
-            latinName: $category === ProductCategory::EssentialOil ? ($oil['latin'] ?? null) : null,
+            latinName: $category === ProductCategory::EssentialOil ? $latin : null,
         );
     }
 

@@ -25,9 +25,10 @@ class BarcodeTest extends TestCase
             'GS1 Digital Link' => ['https://id.example.com/01/04260123456785/10/LOT42?exp=2901', '4260123456785'],
             'article number (Code 128)' => ['60200133', '60200133'],
             'alphanumeric Code 39' => ['AB-1234/5', 'AB-1234/5'],
-            'plain URL' => ['https://www.example.com/lavender?ref=qr', null],
-            'invalid characters' => ['<script>', null],
-            'too long' => [str_repeat('1', 65).'A', null],
+            'QR code with a link is kept' => ['https://www.example.com/lavender?ref=qr&x=1', 'https://www.example.com/lavender?ref=qr&x=1'],
+            'QR code with text' => ["Lavender\nLot 4521 – 15 ml", 'Lavender Lot 4521 – 15 ml'],
+            'Digital Link without scheme' => ['www.example.com/01/04260123456785', '4260123456785'],
+            'too long' => [str_repeat('a', 513), null],
             'empty' => ['   ', null],
         ];
     }
@@ -46,11 +47,11 @@ class BarcodeTest extends TestCase
         $this->assertSame(['AB-1'], Barcode::variants('AB-1'));
     }
 
-    public function test_parses_essential_oil_title_into_german_name(): void
+    public function test_parses_essential_oil_title(): void
     {
         $s = (new ProductTitleParser)->parse('UPCitemdb', 'doTERRA Lavender Essential Oil - 15 mL', 'doTERRA');
 
-        $this->assertSame('Lavendel', $s->name);
+        $this->assertSame('Lavender', $s->name, 'names stay as printed on the bottle');
         $this->assertSame('doTERRA', $s->brand);
         $this->assertSame(ProductCategory::EssentialOil, $s->category);
         $this->assertSame(15.0, $s->quantity);
@@ -58,11 +59,17 @@ class BarcodeTest extends TestCase
         $this->assertSame('Lavandula angustifolia', $s->latinName);
     }
 
-    public function test_prefers_the_longer_oil_name(): void
+    public function test_keeps_original_names_and_finds_botanical_name(): void
     {
-        $s = (new ProductTitleParser)->parse('x', 'Wild Orange Essential Oil 15ml');
+        $parser = new ProductTitleParser;
 
-        $this->assertSame('Wilde Orange', $s->name);
+        $orange = $parser->parse('x', 'Wild Orange Essential Oil 15ml');
+        $this->assertSame('Wild Orange', $orange->name);
+        $this->assertSame('Citrus sinensis', $orange->latinName);
+
+        $tea = $parser->parse('x', 'doTERRA Tea Tree Essential Oil 15 mL', 'doTERRA');
+        $this->assertSame('Tea Tree', $tea->name);
+        $this->assertSame('Melaleuca alternifolia', $tea->latinName);
     }
 
     public function test_blend_keeps_its_name(): void

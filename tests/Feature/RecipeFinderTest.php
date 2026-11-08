@@ -119,6 +119,16 @@ class RecipeFinderTest extends TestCase
         $this->assertTrue(Livewire::test(RecipeFinder::class)->get('availability')[$diffuser->id]['complete']);
     }
 
+    public function test_english_bottle_names_match_without_botanical_name(): void
+    {
+        $this->stock('Tea Tree', ProductCategory::EssentialOil);
+        $this->stock('Jojoba Oil', ProductCategory::CarrierOil);
+
+        $spotCare = Recipe::where('slug', 'pickel-punktpflege')->firstOrFail();
+
+        $this->assertTrue(Livewire::test(RecipeFinder::class)->get('availability')[$spotCare->id]['complete']);
+    }
+
     public function test_empty_products_and_other_users_stock_do_not_count(): void
     {
         $this->stock('Lavendel', ProductCategory::EssentialOil, quantity: 0);

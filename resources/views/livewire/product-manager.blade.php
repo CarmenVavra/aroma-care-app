@@ -198,7 +198,7 @@
                 <x-stock-bar :product="$product" height="h-1.5" class="mt-2" />
                 <dl class="mt-3 grid grid-cols-2 gap-2 text-[13px]">
                     @if ($product->barcode)
-                        <div><dt class="text-muted dark:text-chalk/70">Barcode</dt><dd class="font-semibold">{{ $product->barcode }}</dd></div>
+                        <div><dt class="text-muted dark:text-chalk/70">Code</dt><dd class="font-semibold break-all">{{ $product->barcode }}</dd></div>
                     @endif
                     @if ($product->expires_at)
                         <div><dt class="text-muted dark:text-chalk/70">Haltbar bis</dt><dd class="font-semibold">{{ $product->expires_at->format('m/Y') }}</dd></div>
@@ -369,8 +369,8 @@
                     </div>
 
                     <div>
-                        <label for="f-barcode" class="{{ $label }}">Barcode</label>
-                        <input id="f-barcode" type="text" inputmode="numeric" wire:model="currentProduct.barcode" maxlength="64"
+                        <label for="f-barcode" class="{{ $label }}">Barcode / QR-Code</label>
+                        <input id="f-barcode" type="text" wire:model="currentProduct.barcode" maxlength="{{ App\Support\Barcode::MAX_LENGTH }}"
                             aria-invalid="{{ $errors->has('currentProduct.barcode') ? 'true' : 'false' }}" aria-describedby="f-barcode-error"
                             @class([$input, 'border-violet-500' => $errors->has('currentProduct.barcode'), 'border-line' => ! $errors->has('currentProduct.barcode')])>
                         @error('currentProduct.barcode') <p id="f-barcode-error" class="{{ $err }}">{{ $message }}</p> @enderror

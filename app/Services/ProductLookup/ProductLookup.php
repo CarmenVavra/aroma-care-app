@@ -2,6 +2,7 @@
 
 namespace App\Services\ProductLookup;
 
+use App\Support\Barcode;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
@@ -31,11 +32,14 @@ class ProductLookup
      */
     public function find(array $codes): ?ProductSuggestion
     {
+        // Only EAN/UPC numbers are product data; links or other QR content never leave the server.
+        $codes = array_values(array_filter($codes, [Barcode::class, 'isGtin']));
+
         if (! config('aromacare.lookup.enabled') || $codes === []) {
             return null;
         }
 
-        $key = 'product-lookup:v1:'.$codes[0];
+        $key = 'product-lookup:v2:'.$codes[0];
         $cached = Cache::get($key);
 
         if (is_array($cached)) {

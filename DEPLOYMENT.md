@@ -90,6 +90,7 @@ Backup: die Datei `database.sqlite` herunterladen.
 | Nur den Build prüfen | `./deploy.sh --build-only` (lädt nichts hoch) |
 | Notfall ohne Tests | `./deploy.sh --skip-tests` |
 | Nicht committete Änderungen im Arbeitsordner | `./deploy.sh --allow-dirty` (deployt trotzdem nur `HEAD`) |
+| Startrezepte ändern | `database/data/recipes.php` bearbeiten, committen, `./deploy.sh`. Jedes Deployment gleicht die Rezepte per `RecipeSeeder` ab (nach Slug, entfernte Rezepte werden gelöscht). |
 | Logs ansehen | `~/aromacare.caryssa.at/aromacare-app/shared/storage/logs/laravel-*.log`, PHP-Fehler in `/logs/aromacare.caryssa.at/error_log` |
 | Rollback | `cd ~/aromacare.caryssa.at && ls aromacare-app/releases`, dann `ln -sfn aromacare-app/releases/<älteres-release> app`. Migrationen werden dabei nicht zurückgedreht. |
 

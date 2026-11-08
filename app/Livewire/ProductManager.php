@@ -6,10 +6,13 @@ use App\Actions\SaveProduct;
 use App\Enums\ProductCategory;
 use App\Livewire\Forms\ProductForm;
 use App\Models\Product;
+use App\Models\Recipe;
 use App\Models\User;
+use App\Services\RecipeStockMatcher;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
@@ -17,6 +20,10 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+/**
+ * @property-read Product|null $selectedProduct
+ * @property-read Collection<int, Recipe> $selectedProductRecipes
+ */
 #[Title('Bestand')]
 class ProductManager extends Component
 {
@@ -118,6 +125,22 @@ class ProductManager extends Component
     public function lowStockCount(): int
     {
         return $this->userProducts()->lowStock()->count();
+    }
+
+    /**
+     * Starter recipes that use the selected product ("Rezeptideen" in the detail view).
+     *
+     * @return Collection<int, Recipe>
+     */
+    #[Computed]
+    public function selectedProductRecipes(): Collection
+    {
+        if ($this->selectedProduct === null) {
+            return new Collection;
+        }
+
+        return (new RecipeStockMatcher(new Collection([$this->selectedProduct])))
+            ->recipesUsing($this->selectedProduct, Recipe::with('ingredients')->orderBy('title')->get());
     }
 
     #[Computed]

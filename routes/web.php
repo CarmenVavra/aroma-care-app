@@ -6,6 +6,7 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Auth\ResetPassword;
 use App\Livewire\ProductManager;
 use App\Livewire\Profile;
+use App\Livewire\RecipeFinder;
 use Illuminate\Support\Facades\Route;
 
 // Legal pages – reachable for everyone (guests and logged-in users).
@@ -21,5 +22,6 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', ProductManager::class)->name('stock');
+    Route::get('/rezepte', RecipeFinder::class)->name('recipes');
     Route::get('/profil', Profile::class)->name('profile');
 });

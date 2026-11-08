@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->callWith(ProductSeeder::class, ['user' => $user]);
+        $this->call(RecipeSeeder::class);
     }
 }

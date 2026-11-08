@@ -16,6 +16,7 @@
 @php
     $onStock = request()->routeIs('stock');
     $onProfile = request()->routeIs('profile');
+    $onRecipes = request()->routeIs('recipes');
     $sideItem = 'flex h-11 items-center gap-3 rounded-xl px-3.5 text-left text-[15px]';
 @endphp
 
@@ -45,10 +46,8 @@
                     <a href="{{ route('stock', ['scan' => 1]) }}" class="{{ $sideItem }} font-medium text-white/85 hover:bg-white/10">Scanner</a>
                 @endif
 
-                <span aria-disabled="true" title="Demnächst verfügbar"
-                    class="{{ $sideItem }} justify-between font-medium text-white/50">
-                    Rezept-Finder <span class="text-xs">bald</span>
-                </span>
+                <a href="{{ route('recipes') }}" @if ($onRecipes) aria-current="page" @endif
+                    @class([$sideItem, 'bg-cobalt-200/20 font-bold' => $onRecipes, 'font-medium text-white/85 hover:bg-white/10' => ! $onRecipes])>Rezept-Finder</a>
 
                 <a href="{{ route('profile') }}" @if ($onProfile) aria-current="page" @endif
                     @class([$sideItem, 'bg-cobalt-200/20 font-bold' => $onProfile, 'font-medium text-white/85 hover:bg-white/10' => ! $onProfile])>
@@ -124,10 +123,11 @@
                 @endif
             </li>
             <li class="grid place-items-center">
-                <span aria-disabled="true" title="Demnächst verfügbar" class="{{ $navItem }} font-medium text-muted dark:text-chalk/70">
-                    <span class="{{ $pill }}"><x-app-icon name="recipe" /></span>
+                <a href="{{ route('recipes') }}" @if ($onRecipes) aria-current="page" @endif
+                    @class([$navItem, 'font-bold' => $onRecipes, 'font-medium text-muted dark:text-chalk/70' => ! $onRecipes])>
+                    <span @class([$pill, 'bg-[#DCE5FB] dark:bg-cobalt-200/15' => $onRecipes])><x-app-icon name="recipe" /></span>
                     Rezept-Finder
-                </span>
+                </a>
             </li>
             <li class="grid place-items-center">
                 <a href="{{ route('profile') }}" @if ($onProfile) aria-current="page" @endif

@@ -193,6 +193,9 @@ trap 'echo "[FEHLER] Deployment abgebrochen - altes Release bleibt aktiv." >&2; 
 log "Migrationen"
 "$PHP" artisan migrate --force
 
+log "Startrezepte abgleichen"
+"$PHP" artisan db:seed --class=RecipeSeeder --force
+
 # Kein config:cache/view:cache/route:cache: Die wuerden die Chroot-Pfade der SSH-Shell fest einbacken
 # (z. B. in der Closure der Health-Route /up) und beim Webserver mit open_basedir-Fehlern enden.
 log "Caches"

@@ -266,6 +266,23 @@
                 @endif
             @endif
 
+            @if ($this->selectedProductRecipes->isNotEmpty())
+                <h3 class="mt-6 mb-2 text-xs font-bold tracking-[.08em] text-violet-700 uppercase dark:text-cobalt-200">Rezeptideen</h3>
+                <ul class="divide-y divide-mist-300 rounded-[18px] bg-mist-100 px-4 dark:divide-white/10 dark:bg-white/5">
+                    @foreach ($this->selectedProductRecipes->take(3) as $recipe)
+                        <li class="py-3">
+                            <span class="block font-semibold">{{ $recipe->title }}</span>
+                            <span class="block text-[13px] text-muted dark:text-chalk/70">{{ $recipe->method->label() }} · {{ $recipe->yield }} · {{ $recipe->purpose }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+                <a href="{{ route('recipes', ['produkt' => $product->id]) }}"
+                    class="mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-violet-700 hover:underline dark:text-cobalt-200">
+                    {{ $this->selectedProductRecipes->count() === 1 ? 'Rezept' : 'Alle '.$this->selectedProductRecipes->count().' Rezepte' }} im Rezept-Finder
+                    <x-app-icon name="chevron-right" class="size-4" />
+                </a>
+            @endif
+
             <div class="mt-8 space-y-3">
                 @if ((float) $product->initial_quantity > 0)
                     <button type="button" wire:click="restockProduct({{ $product->id }})" wire:loading.attr="disabled"

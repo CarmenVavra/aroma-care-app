@@ -8,11 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#1B2447">
     <title>{{ $title }} · {{ config('app.name') }}</title>
-    <script>
-        try {
-            if (localStorage.getItem('aromacare-theme') === 'dark') document.documentElement.classList.add('dark');
-        } catch (e) {}
-    </script>
+    <x-theme-script />
     @vite(['resources/css/app.css'])
 </head>
 

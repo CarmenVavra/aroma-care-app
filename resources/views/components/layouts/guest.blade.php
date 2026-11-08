@@ -7,11 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#1B2447">
     <title>{{ isset($title) ? $title.' · ' : '' }}{{ config('app.name') }}</title>
-    <script>
-        try {
-            if (localStorage.getItem('aromacare-theme') === 'dark') document.documentElement.classList.add('dark');
-        } catch (e) {}
-    </script>
+    <x-theme-script />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>

@@ -192,6 +192,25 @@ class AuthTest extends TestCase
             ->assertSee('Passwort ändern');
     }
 
+    public function test_profile_offers_theme_switch_for_mobile(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get(route('profile'))
+            ->assertOk()
+            ->assertSee('Darstellung')
+            ->assertSee('role="radiogroup"', false)
+            ->assertSeeInOrder(['Hell', 'Dunkel', 'Automatisch']);
+    }
+
+    public function test_theme_is_applied_before_paint_on_all_layouts(): void
+    {
+        $script = "localStorage.getItem('aromacare-theme')";
+
+        $this->get(route('login'))->assertSee($script, false);
+        $this->get(route('legal.imprint'))->assertSee($script, false);
+        $this->actingAs(User::factory()->create())->get(route('stock'))->assertSee($script, false);
+    }
+
     public function test_user_can_update_profile(): void
     {
         $user = User::factory()->create();

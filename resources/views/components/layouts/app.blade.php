@@ -7,13 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#1B2447">
     <title>{{ isset($title) ? $title.' · ' : '' }}{{ config('app.name') }}</title>
-
-    {{-- Apply the stored theme before paint to avoid a flash. --}}
-    <script>
-        try {
-            if (localStorage.getItem('aromacare-theme') === 'dark') document.documentElement.classList.add('dark');
-        } catch (e) {}
-    </script>
+    <x-theme-script />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -75,12 +69,12 @@
                     </a>
                 @endif
 
-                <div x-data="{ dark: document.documentElement.classList.contains('dark') }"
+                <div x-data="themeSwitch"
                     class="flex items-center justify-between px-2.5 text-[13px]">
                     <span id="dark-mode-label">Dark Mode</span>
                     <button type="button" role="switch" :aria-checked="dark.toString()"
                         aria-labelledby="dark-mode-label"
-                        @click="dark = !dark; document.documentElement.classList.toggle('dark', dark); try { localStorage.setItem('aromacare-theme', dark ? 'dark' : 'light') } catch (e) {}"
+                        @click="toggle()"
                         class="relative h-6 w-11 rounded-full bg-white/20 transition-colors"
                         :class="dark && 'bg-sky-300'">
                         <span class="absolute left-0.5 top-0.5 size-5 rounded-full bg-white transition-transform"

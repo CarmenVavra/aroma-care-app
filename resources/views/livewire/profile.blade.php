@@ -38,6 +38,14 @@
         </form>
     </section>
 
+    <section class="{{ $card }}" aria-labelledby="profile-appearance">
+        <h2 id="profile-appearance" class="{{ $heading }}">Darstellung</h2>
+        <p class="mb-4 text-sm text-muted dark:text-chalk/75">
+            „Automatisch“ folgt der Einstellung deines Geräts. Die Auswahl wird nur in diesem Browser gespeichert.
+        </p>
+        <x-theme-switch />
+    </section>
+
     <section class="{{ $card }}" aria-labelledby="profile-session">
         <h2 id="profile-session" class="{{ $heading }}">Sitzung</h2>
         <button type="button" wire:click="logout"

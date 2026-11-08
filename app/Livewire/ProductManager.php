@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Actions\SaveProduct;
 use App\Enums\ProductCategory;
 use App\Livewire\Forms\ProductForm;
+use App\Models\CatalogEntry;
 use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\User;
@@ -287,9 +288,10 @@ class ProductManager extends Component
         }
 
         $variants = Barcode::variants($code);
-        // Only valid EAN/UPC numbers are sent to product databases (never links, article numbers or other
-        // QR content). Without a hit, brand hints are taken from the code itself (e.g. doTERRA item numbers).
-        $lookup = fn () => (Barcode::isGtin($code) ? app(ProductLookup::class)->find($variants) : null)
+        // Shared catalogue first (any kind of code). Only valid EAN/UPC numbers are sent to product databases
+        // (never links, article numbers or other QR content). Last resort: brand hints from the code itself.
+        $lookup = fn () => CatalogEntry::suggestionFor($variants)
+            ?? (Barcode::isGtin($code) ? app(ProductLookup::class)->find($variants) : null)
             ?? app(CodeHints::class)->forCode($code);
         $product = $this->userProducts()->whereIn('barcode', $variants)->first();
 
@@ -332,7 +334,7 @@ class ProductManager extends Component
             return;
         }
 
-        // 2. Public product databases, 3. hints from the code itself.
+        // 2. Shared code catalogue, 3. public product databases, 4. hints from the code itself.
         $suggestion = $lookup();
 
         if ($suggestion !== null && $this->currentProduct->applySuggestion($suggestion)) {

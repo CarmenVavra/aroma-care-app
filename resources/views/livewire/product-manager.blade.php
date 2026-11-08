@@ -371,9 +371,13 @@
                     <div>
                         <label for="f-barcode" class="{{ $label }}">Barcode / QR-Code</label>
                         <input id="f-barcode" type="text" wire:model="currentProduct.barcode" maxlength="{{ App\Support\Barcode::MAX_LENGTH }}"
-                            aria-invalid="{{ $errors->has('currentProduct.barcode') ? 'true' : 'false' }}" aria-describedby="f-barcode-error"
+                            aria-invalid="{{ $errors->has('currentProduct.barcode') ? 'true' : 'false' }}" aria-describedby="f-barcode-error f-barcode-hint"
                             @class([$input, 'border-violet-500' => $errors->has('currentProduct.barcode'), 'border-line' => ! $errors->has('currentProduct.barcode')])>
                         @error('currentProduct.barcode') <p id="f-barcode-error" class="{{ $err }}">{{ $message }}</p> @enderror
+                        <p id="f-barcode-hint" class="mt-1 text-xs text-muted dark:text-chalk/70">
+                            Name, Marke und Größe zu diesem Code landen ohne Bezug zu deinem Konto im
+                            <a href="{{ route('legal.privacy') }}" target="_blank" class="underline">gemeinsamen Katalog</a>.
+                        </p>
                     </div>
 
                     <div class="grid grid-cols-[1fr_0.8fr_1.2fr] gap-2.5">

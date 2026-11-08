@@ -106,6 +106,17 @@
             dem Speichern prüfst.
         </p>
     @endif
+    <p>
+        <strong>Gemeinsamer Code-Katalog:</strong> Speicherst du ein Produkt mit Barcode oder QR-Code, merkt sich
+        AromaCare zu diesem Code den Produktnamen, die Marke, die Kategorie, die Packungsgröße und den
+        botanischen Namen – <strong>ohne Bezug zu deinem Konto</strong> (es wird nicht gespeichert, wer den
+        Eintrag angelegt hat; Bestand, Haltbarkeit und Notizen werden nicht übernommen). Scannt jemand anderes
+        denselben Code, werden diese Angaben im Formular vorgeschlagen. Rechtsgrundlage ist das berechtigte
+        Interesse an einer einfachen Erfassung (Art. 6 Abs. 1 lit. f DSGVO). Bitte trage im Produktnamen daher
+        keine persönlichen Angaben ein. Katalogeinträge bleiben auch nach dem Löschen eines Produkts oder Kontos
+        bestehen, da sie keine personenbezogenen Daten enthalten. Auf Wunsch entfernen wir einen Eintrag – eine
+        E-Mail an die oben genannte Adresse genügt.
+    </p>
 
     <h2>7. Cookies und lokaler Speicher</h2>
     <p>Es werden ausschließlich technisch notwendige Cookies verwendet:</p>

@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Enums\ProductCategory;
 use App\Livewire\Forms\ProductForm;
+use App\Models\CatalogEntry;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -38,8 +39,12 @@ class SaveProduct
             }
 
             $this->syncDetails($product, $category, $validated);
+            $product->load(['essentialOilDetail', 'carrierOilDetail']);
 
-            return $product->load(['essentialOilDetail', 'carrierOilDetail']);
+            // Shared code catalogue: the next person scanning this code gets the data prefilled.
+            CatalogEntry::learnFrom($product);
+
+            return $product;
         });
     }
 

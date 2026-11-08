@@ -196,6 +196,9 @@ log "Migrationen"
 log "Startrezepte abgleichen"
 "$PHP" artisan db:seed --class=RecipeSeeder --force
 
+log "Code-Katalog abgleichen"
+"$PHP" artisan catalog:sync
+
 # Kein config:cache/view:cache/route:cache: Die wuerden die Chroot-Pfade der SSH-Shell fest einbacken
 # (z. B. in der Closure der Health-Route /up) und beim Webserver mit open_basedir-Fehlern enden.
 log "Caches"

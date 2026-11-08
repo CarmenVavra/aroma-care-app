@@ -57,6 +57,8 @@
         </button>
     </section>
 
+    <x-legal-links class="mt-8" />
+
     {{-- Delete account: custom dialog with password confirmation --}}
     <div x-cloak x-show="confirmDeleteAccount" x-transition.opacity class="fixed inset-0 z-[80] grid place-items-center bg-night-900/60 p-4"
         @keydown.escape.window="confirmDeleteAccount = false">

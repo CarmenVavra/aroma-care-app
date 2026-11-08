@@ -26,6 +26,8 @@
         <div class="w-full max-w-sm rounded-(--radius-card) border border-mist-300 bg-mist-50 p-6 shadow-soft dark:border-white/10 dark:bg-night-800">
             {{ $slot }}
         </div>
+
+        <x-legal-links class="mt-6" />
     </main>
 
     @livewireScriptConfig

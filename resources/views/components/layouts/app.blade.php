@@ -87,6 +87,11 @@
                             :class="dark && 'translate-x-5'"></span>
                     </button>
                 </div>
+
+                <nav aria-label="Rechtliches" class="flex gap-4 px-2.5 text-xs text-white/70">
+                    <a href="{{ route('legal.imprint') }}" class="hover:text-white hover:underline">Impressum</a>
+                    <a href="{{ route('legal.privacy') }}" class="hover:text-white hover:underline">Datenschutz</a>
+                </nav>
             </div>
         </aside>
 

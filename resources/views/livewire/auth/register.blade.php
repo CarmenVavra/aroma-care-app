@@ -16,6 +16,11 @@
         <x-field label="Passwort wiederholen" id="password_confirmation" type="password" wire:model="password_confirmation"
             autocomplete="new-password" required />
 
+        <p class="text-[13px] text-muted dark:text-chalk/70">
+            Informationen zur Verarbeitung deiner Daten findest du in der
+            <a href="{{ route('legal.privacy') }}" class="font-semibold text-violet-700 underline dark:text-cobalt-200">Datenschutzerklärung</a>.
+        </p>
+
         <button type="submit" wire:loading.attr="disabled"
             class="h-[54px] w-full rounded-2xl bg-navy-900 text-base font-bold text-white hover:bg-navy-900/90 disabled:opacity-60 dark:bg-chalk dark:text-navy-900">
             Registrieren

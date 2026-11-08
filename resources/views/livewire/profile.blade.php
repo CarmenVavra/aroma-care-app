@@ -46,6 +46,38 @@
         <x-theme-switch />
     </section>
 
+    <section x-data="installApp" class="{{ $card }}" aria-labelledby="profile-install">
+        <h2 id="profile-install" class="{{ $heading }}">App installieren</h2>
+
+        <p x-show="installed" class="flex items-center gap-2 text-sm font-semibold">
+            <x-app-icon name="check" class="size-4 text-cobalt-500 dark:text-cobalt-200" /> AromaCare ist auf diesem Gerät installiert.
+        </p>
+
+        <div x-show="!installed">
+            <p class="text-sm text-muted dark:text-chalk/75">
+                Lege AromaCare wie eine App auf deinen Startbildschirm – mit eigenem Symbol und ohne Browserleiste.
+            </p>
+
+            <button type="button" x-show="canPrompt" x-cloak @click="install()" class="{{ $button }} mt-4">
+                Jetzt installieren
+            </button>
+
+            {{-- iPhone/iPad: Safari has no install prompt, only the share menu. --}}
+            <ol x-show="!canPrompt && ios" x-cloak class="mt-4 list-decimal space-y-1.5 pl-5 text-sm leading-relaxed">
+                <li>Seite in <strong>Safari</strong> öffnen.</li>
+                <li>Unten auf <strong>Teilen</strong> tippen (Quadrat mit Pfeil nach oben).</li>
+                <li><strong>„Zum Home-Bildschirm“</strong> wählen und mit <strong>Hinzufügen</strong> bestätigen.</li>
+            </ol>
+
+            {{-- Android without prompt (e.g. dismissed before, Firefox) and desktop browsers. --}}
+            <ol x-show="!canPrompt && !ios" x-cloak class="mt-4 list-decimal space-y-1.5 pl-5 text-sm leading-relaxed">
+                <li>Browser-Menü öffnen (<strong>⋮</strong> oben rechts).</li>
+                <li><strong>„App installieren“</strong> bzw. <strong>„Zum Startbildschirm hinzufügen“</strong> wählen.</li>
+                <li>Mit <strong>Installieren</strong> bestätigen.</li>
+            </ol>
+        </div>
+    </section>
+
     <section class="{{ $card }}" aria-labelledby="profile-session">
         <h2 id="profile-session" class="{{ $heading }}">Sitzung</h2>
         <button type="button" wire:click="logout"

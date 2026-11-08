@@ -1,0 +1,25 @@
+{
+  "id": "/",
+  "name": "AromaCare",
+  "short_name": "AromaCare",
+  "description": "Ätherische Öle, Basisöle, Wachse und Rezepte verwalten – mit Barcode-Scanner.",
+  "lang": "de",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F1F4FB",
+  "theme_color": "#1B2447",
+  "categories": ["lifestyle", "health", "productivity"],
+  "icons": [
+    { "src": "/app-icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Barcode scannen", "short_name": "Scannen", "url": "/?scan=1", "icons": [{ "src": "/app-icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Neues Produkt", "short_name": "Neu", "url": "/?neu=1", "icons": [{ "src": "/app-icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Rezept-Finder", "short_name": "Rezepte", "url": "/rezepte", "icons": [{ "src": "/app-icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

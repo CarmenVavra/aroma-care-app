@@ -329,7 +329,7 @@ cp -r public/build "$work/public/build"
     composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --no-progress
 )
 
-for p in tests UI_Mockups .claude CLAUDE.md start.bat stop.bat deploy.sh DEPLOYMENT.md phpstan.neon phpunit.xml \
+for p in tests tools UI_Mockups .claude CLAUDE.md start.bat stop.bat deploy.sh DEPLOYMENT.md phpstan.neon phpunit.xml \
     .deploy.env.example .env.production.example node_modules .env public/hot database/database.sqlite; do
     rm -rf "${work:?}/$p"
 done

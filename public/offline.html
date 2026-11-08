@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#1B2447">
+    <title>Offline · AromaCare</title>
+    <link rel="icon" type="image/png" href="/app-icons/icon-192.png">
+    <!-- Standalone page shown by the service worker without network: the Vite build may not be cached, so styles are kept here. -->
+    <style>
+        :root { color-scheme: light dark; }
+        body {
+            margin: 0; min-height: 100dvh; display: grid; place-items: center; padding: 24px;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 16px;
+            background: #F1F4FB; color: #1B2447; text-align: center;
+        }
+        main { max-width: 360px; }
+        img { width: 72px; height: 72px; border-radius: 18px; }
+        h1 { font-family: Georgia, serif; font-weight: 500; font-size: 30px; margin: 20px 0 8px; }
+        p { color: #4E5876; line-height: 1.5; margin: 0 0 24px; }
+        button {
+            min-height: 48px; padding: 0 24px; border: 0; border-radius: 16px; cursor: pointer;
+            background: #1B2447; color: #fff; font-size: 16px; font-weight: 700;
+        }
+        button:focus-visible { outline: 2px solid #5680E9; outline-offset: 3px; }
+        @media (prefers-color-scheme: dark) {
+            body { background: #11162B; color: #E6E9F7; }
+            p { color: rgba(230, 233, 247, .75); }
+            button { background: #E6E9F7; color: #1B2447; }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <img src="/app-icons/icon-192.png" alt="">
+        <h1>Du bist offline</h1>
+        <p>AromaCare braucht eine Internetverbindung, um deinen Bestand zu laden. Bitte prüfe deine Verbindung.</p>
+        <button type="button" onclick="location.reload()">Erneut versuchen</button>
+    </main>
+</body>
+
+</html>

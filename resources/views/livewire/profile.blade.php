@@ -9,7 +9,7 @@
     </header>
 
     @php($card = 'mt-6 rounded-(--radius-card) border border-mist-300 bg-mist-50 p-5 shadow-soft dark:border-white/10 dark:bg-night-800')
-    @php($button = 'h-12 rounded-2xl bg-navy-900 px-6 text-sm font-bold text-white hover:bg-navy-900/90 disabled:opacity-60 dark:bg-chalk dark:text-navy-900')
+    @php($button = 'h-12 rounded-2xl bg-navy-900 px-6 text-sm font-bold text-white hover:bg-navy-900/90 dark:hover:bg-chalk/85 disabled:opacity-60 dark:bg-chalk dark:text-navy-900')
     @php($heading = 'mb-4 text-xs font-bold tracking-[.08em] text-violet-700 uppercase dark:text-cobalt-200')
 
     <section class="{{ $card }}" aria-labelledby="profile-data">

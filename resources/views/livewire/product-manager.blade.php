@@ -17,7 +17,7 @@
                 <span aria-hidden="true">{{ auth()->user()->initial }}</span>
             </a>
             <button type="button" wire:click="createProduct"
-                class="hidden h-11 items-center gap-2 rounded-2xl bg-navy-900 px-4 text-sm font-bold text-white hover:bg-navy-900/90 md:flex lg:hidden dark:bg-chalk dark:text-navy-900">
+                class="hidden h-11 items-center gap-2 rounded-2xl bg-navy-900 px-4 text-sm font-bold text-white hover:bg-navy-900/90 dark:hover:bg-chalk/85 md:flex lg:hidden dark:bg-chalk dark:text-navy-900">
                 <x-app-icon name="plus" class="size-4" /> Neues Produkt
             </button>
         </header>
@@ -538,7 +538,7 @@
                 {{-- Fixed action bar --}}
                 <div class="border-t border-mist-300 bg-mist-50 px-5 pt-4 pb-[max(env(safe-area-inset-bottom),1rem)] dark:border-white/10 dark:bg-night-800">
                     <button type="submit" wire:loading.attr="disabled" wire:target="saveProduct"
-                        class="h-[54px] w-full rounded-2xl bg-navy-900 text-[17px] font-bold text-white hover:bg-navy-900/90 disabled:opacity-60 dark:bg-chalk dark:text-navy-900">
+                        class="h-[54px] w-full rounded-2xl bg-navy-900 text-[17px] font-bold text-white hover:bg-navy-900/90 dark:hover:bg-chalk/85 disabled:opacity-60 dark:bg-chalk dark:text-navy-900">
                         <span wire:loading.remove wire:target="saveProduct">Speichern</span>
                         <span wire:loading wire:target="saveProduct">Speichert …</span>
                     </button>

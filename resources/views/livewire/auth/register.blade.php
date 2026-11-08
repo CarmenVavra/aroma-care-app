@@ -22,7 +22,7 @@
         </p>
 
         <button type="submit" wire:loading.attr="disabled"
-            class="h-[54px] w-full rounded-2xl bg-navy-900 text-base font-bold text-white hover:bg-navy-900/90 disabled:opacity-60 dark:bg-chalk dark:text-navy-900">
+            class="h-[54px] w-full rounded-2xl bg-navy-900 text-base font-bold text-white hover:bg-navy-900/90 dark:hover:bg-chalk/85 disabled:opacity-60 dark:bg-chalk dark:text-navy-900">
             Registrieren
         </button>
     </form>

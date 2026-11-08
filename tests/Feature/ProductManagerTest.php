@@ -216,6 +216,18 @@ class ProductManagerTest extends TestCase
         }
     }
 
+    public function test_primary_buttons_keep_a_light_hover_in_dark_mode(): void
+    {
+        // hover:bg-navy-900/90 alone turned the light dark-mode button navy, hiding its navy text.
+        foreach (File::allFiles(resource_path('views')) as $view) {
+            preg_match_all('/class="[^"]*hover:bg-navy-900\/90[^"]*"|\'[^\']*hover:bg-navy-900\/90[^\']*\'/', $view->getContents(), $matches);
+
+            foreach ($matches[0] as $classes) {
+                $this->assertStringContainsString('dark:hover:bg-chalk', $classes, $view->getPathname());
+            }
+        }
+    }
+
     public function test_detail_view_has_no_restock_button(): void
     {
         $product = Product::factory()->for($this->user)->create(['quantity' => 2, 'initial_quantity' => 15]);

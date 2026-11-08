@@ -30,18 +30,25 @@
                     <x-app-icon name="close" />
                 </button>
                 <h2 id="scanner-title" class="text-[17px] font-semibold">Barcode scannen</h2>
-                <button type="button" @click="toggleTorch()" :disabled="!torchSupported" :aria-pressed="torchOn.toString()"
-                    aria-label="Taschenlampe" :class="torchOn ? 'bg-sky-300 text-navy-900' : 'bg-white/16'"
-                    class="grid size-11 place-items-center rounded-full disabled:opacity-40">
-                    <x-app-icon name="torch" />
-                </button>
+                <div class="flex items-center gap-2">
+                    <button type="button" x-show="zoomLevels.length > 1" @click="cycleZoom()"
+                        :aria-label="'Zoom ' + zoom + '-fach, tippen zum Ändern'"
+                        class="grid h-11 min-w-11 place-items-center rounded-full bg-white/16 px-3 text-sm font-bold hover:bg-white/25"
+                        x-text="zoom + '×'"></button>
+                    <button type="button" @click="toggleTorch()" :disabled="!torchSupported" :aria-pressed="torchOn.toString()"
+                        aria-label="Taschenlampe" :class="torchOn ? 'bg-sky-300 text-navy-900' : 'bg-white/16'"
+                        class="grid size-11 place-items-center rounded-full disabled:opacity-40">
+                        <x-app-icon name="torch" />
+                    </button>
+                </div>
             </div>
 
             {{-- Hint below the viewfinder --}}
             <div class="pointer-events-none absolute inset-x-0 top-[calc(50%+90px)] text-center"
                 x-show="mode === 'scan' && (status === 'scanning' || status === 'starting')">
                 <p class="text-base font-medium">Barcode im Rahmen ausrichten</p>
-                <p class="mt-1 text-sm text-white/70">EAN-13 · EAN-8 · QR-Code</p>
+                <p class="mt-1 text-sm text-white/70">EAN · UPC · Code 128 · DataMatrix · QR</p>
+                <p class="mt-1 text-sm text-white/70" x-show="zoomLevels.length > 1">Kleiner Code? Etwas Abstand halten und zoomen.</p>
             </div>
 
             <div class="flex-1" aria-hidden="true"></div>

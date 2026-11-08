@@ -5,6 +5,7 @@ namespace App\Livewire\Forms;
 use App\Enums\Absorption;
 use App\Enums\ProductCategory;
 use App\Models\Product;
+use App\Services\ProductLookup\ProductSuggestion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -150,6 +151,55 @@ class ProductForm extends Form
             $this->absorption = (string) $detail->absorption?->value;
             $this->use_areas = $detail->use_areas ?? [];
         }
+    }
+
+    /**
+     * New package of a product the user deleted earlier: take over all data,
+     * start full again and leave the expiry date empty.
+     */
+    public function fillFromPrevious(Product $previous, string $barcode): void
+    {
+        $this->setProduct($previous);
+
+        $this->id = null;
+        $this->barcode = $barcode;
+        $this->quantity = rtrim(rtrim((string) $previous->initial_quantity, '0'), '.');
+        $this->expires_at = '';
+    }
+
+    /**
+     * Fill empty fields from a database lookup; entered values are never overwritten.
+     *
+     * @return bool whether anything was filled in
+     */
+    public function applySuggestion(ProductSuggestion $suggestion, bool $withCategory = true): bool
+    {
+        $filled = false;
+
+        if ($withCategory && $suggestion->category !== null) {
+            $this->category = $suggestion->category->value;
+            $filled = true;
+        }
+
+        foreach (['name' => $suggestion->name, 'brand' => $suggestion->brand, 'latin_name' => $suggestion->latinName] as $field => $value) {
+            if ($this->{$field} === '' && $value !== null && $value !== '') {
+                $this->{$field} = $value;
+                $filled = true;
+            }
+        }
+
+        if ($this->quantity === '' && $suggestion->quantity !== null && $suggestion->quantity > 0) {
+            // 15.0 -> "15", 0.5 -> "0.5" (same format as in edit mode)
+            $this->quantity = rtrim(rtrim(number_format($suggestion->quantity, 2, '.', ''), '0'), '.');
+
+            if (in_array($suggestion->unit, config('aromacare.units'), true)) {
+                $this->unit = (string) $suggestion->unit;
+            }
+
+            $filled = true;
+        }
+
+        return $filled;
     }
 
     /**

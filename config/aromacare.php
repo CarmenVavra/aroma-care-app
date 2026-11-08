@@ -20,4 +20,24 @@ return [
 
     'per_page' => 15,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Barcode lookup
+    |--------------------------------------------------------------------------
+    |
+    | After scanning an unknown barcode, product data is looked up in public
+    | databases (server-side, only the barcode number is sent). Sources are
+    | asked in this order: open_beauty_facts, open_food_facts, upcitemdb.
+    |
+    */
+
+    'lookup' => [
+        'enabled' => (bool) env('PRODUCT_LOOKUP_ENABLED', true),
+        'timeout' => (int) env('PRODUCT_LOOKUP_TIMEOUT', 4),
+        'sources' => array_values(array_filter(array_map('trim', explode(',', (string) env(
+            'PRODUCT_LOOKUP_SOURCES',
+            'open_beauty_facts,open_food_facts,upcitemdb'
+        ))))),
+    ],
+
 ];

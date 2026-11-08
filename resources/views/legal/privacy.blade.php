@@ -26,8 +26,9 @@
     <h2>2. Grundsätze</h2>
     <ul>
         <li>Es gibt <strong>keine Werbung, kein Tracking und keine Analyse-Tools</strong>.</li>
-        <li>Schriftarten und alle anderen Dateien werden vom eigenen Server geladen. Es werden keine Daten an
-            Google oder andere Drittanbieter übertragen.</li>
+        <li>Schriftarten und alle anderen Dateien werden vom eigenen Server geladen. Dein Browser lädt nichts
+            von Google oder anderen Drittanbietern. Einzige Ausnahme auf dem Server: die Produktdaten-Suche zu
+            einem gescannten Barcode (siehe Abschnitt 6).</li>
         <li>Deine Daten werden nicht verkauft und nur dann weitergegeben, wenn dies in dieser Erklärung genannt
             ist oder eine gesetzliche Pflicht besteht.</li>
         <li>Die Verbindung ist per TLS (HTTPS) verschlüsselt.</li>
@@ -93,6 +94,18 @@
         Sie werden im Browser ausgewertet und nicht hochgeladen. Du kannst die Kamera-Berechtigung jederzeit in
         den Einstellungen deines Browsers widerrufen.
     </p>
+    @if (config('aromacare.lookup.enabled'))
+        <p>
+            <strong>Produktdaten-Suche:</strong> Ist ein gescannter Barcode noch nicht in deinem Bestand, fragt
+            der Server von AromaCare – nicht dein Gerät – bei öffentlichen Produktdatenbanken nach Name, Marke
+            und Füllmenge: <em>Open Beauty Facts</em> und <em>Open Food Facts</em> (Open Food Facts, Frankreich)
+            sowie <em>UPCitemdb</em> (USA). Dabei wird <strong>ausschließlich die Barcode-Nummer</strong>
+            übermittelt, keine Angaben zu dir, deinem Konto oder deinem Bestand und nicht deine IP-Adresse.
+            Ein Barcode ist eine Produktnummer und kein personenbezogenes Datum. Die Ergebnisse werden bis zu
+            30 Tage auf dem Server zwischengespeichert. Die gefundenen Daten sind nur ein Vorschlag, den du vor
+            dem Speichern prüfst.
+        </p>
+    @endif
 
     <h2>7. Cookies und lokaler Speicher</h2>
     <p>Es werden ausschließlich technisch notwendige Cookies verwendet:</p>

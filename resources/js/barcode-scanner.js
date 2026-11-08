@@ -28,7 +28,12 @@ export default function barcodeScanner({ elementId = 'barcode-scanner-region' } 
 
         scanner ??= new Html5Qrcode(elementId, {
             verbose: false,
-            formatsToSupport: [F.EAN_13, F.EAN_8, F.UPC_A, F.UPC_E, F.CODE_128, F.QR_CODE],
+            // Small bottles often carry Code 128, GS1 DataBar or DataMatrix instead of EAN.
+            formatsToSupport: [
+                F.EAN_13, F.EAN_8, F.UPC_A, F.UPC_E, F.UPC_EAN_EXTENSION,
+                F.CODE_128, F.CODE_39, F.CODE_93, F.ITF, F.CODABAR,
+                F.RSS_14, F.RSS_EXPANDED, F.QR_CODE, F.DATA_MATRIX, F.PDF_417, F.AZTEC,
+            ],
             experimentalFeatures: { useBarCodeDetectorIfSupported: true },
         });
 
@@ -42,11 +47,13 @@ export default function barcodeScanner({ elementId = 'barcode-scanner-region' } 
         manualCode: '',
         torchSupported: false,
         torchOn: false,
+        zoomLevels: [],
+        zoom: 1,
 
         get statusMessage() {
             return {
                 starting: 'Kamera wird gestartet …',
-                processing: 'Barcode erkannt – wird geprüft …',
+                processing: 'Barcode erkannt – Produktdaten werden gesucht …',
                 denied: 'Kein Zugriff auf die Kamera. Bitte erlaube den Kamerazugriff in den Browser-Einstellungen oder gib den Code manuell ein.',
                 nocamera: 'Es wurde keine Kamera gefunden. Lade ein Foto hoch oder gib den Code manuell ein.',
                 unsupported: 'Die Kamera ist nur über HTTPS verfügbar. Lade ein Foto hoch oder gib den Code manuell ein.',
@@ -109,7 +116,16 @@ export default function barcodeScanner({ elementId = 'barcode-scanner-region' } 
 
                 await instance.start(
                     { facingMode: 'environment' },
-                    { fps: 10 },
+                    {
+                        fps: 15,
+                        // Higher resolution and continuous focus: needed for the tiny codes on 5–15 ml bottles.
+                        videoConstraints: {
+                            facingMode: 'environment',
+                            width: { ideal: 1920 },
+                            height: { ideal: 1080 },
+                            advanced: [{ focusMode: 'continuous' }],
+                        },
+                    },
                     (decodedText) => this.onDetected(decodedText),
                     () => {}, // "no code in this frame" – ignore
                 );
@@ -123,6 +139,7 @@ export default function barcodeScanner({ elementId = 'barcode-scanner-region' } 
 
                 this.status = 'scanning';
                 this.detectTorch(instance);
+                this.detectZoom(instance);
             } catch (error) {
                 const message = `${error?.name ?? ''} ${error?.message ?? error}`;
 
@@ -139,6 +156,8 @@ export default function barcodeScanner({ elementId = 'barcode-scanner-region' } 
         async stopCamera() {
             this.torchOn = false;
             this.torchSupported = false;
+            this.zoomLevels = [];
+            this.zoom = 1;
 
             if (!scanner) {
                 return;
@@ -162,6 +181,33 @@ export default function barcodeScanner({ elementId = 'barcode-scanner-region' } 
                 this.torchSupported = Boolean(instance.getRunningTrackCapabilities()?.torch);
             } catch {
                 this.torchSupported = false;
+            }
+        },
+
+        detectZoom(instance) {
+            try {
+                const caps = instance.getRunningTrackCapabilities()?.zoom;
+
+                this.zoomLevels = caps && caps.max > 1
+                    ? [1, 2, 3].filter((level) => level >= caps.min && level <= caps.max)
+                    : [];
+            } catch {
+                this.zoomLevels = [];
+            }
+        },
+
+        async cycleZoom() {
+            if (!scanner || this.zoomLevels.length < 2) {
+                return;
+            }
+
+            const next = this.zoomLevels[(this.zoomLevels.indexOf(this.zoom) + 1) % this.zoomLevels.length] ?? 1;
+
+            try {
+                await scanner.applyVideoConstraints({ advanced: [{ zoom: next }] });
+                this.zoom = next;
+            } catch {
+                this.zoomLevels = [];
             }
         },
 
@@ -221,8 +267,15 @@ export default function barcodeScanner({ elementId = 'barcode-scanner-region' } 
                 return;
             }
 
-            await this.close();
-            await this.$wire.handleScannedBarcode(value);
+            // Keep the "searching" state visible while the server looks up product data.
+            this.status = 'processing';
+            await this.stopCamera();
+
+            try {
+                await this.$wire.handleScannedBarcode(value);
+            } finally {
+                await this.close();
+            }
         },
 
         destroy() {

@@ -8,7 +8,9 @@ use App\Livewire\Forms\ProductForm;
 use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\User;
+use App\Services\ProductLookup\ProductLookup;
 use App\Services\RecipeStockMatcher;
+use App\Support\Barcode;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -52,6 +54,9 @@ class ProductManager extends Component
 
     /** Set when the detail view was opened by a barcode scan ("Produkt erkannt"). */
     public bool $openedByScan = false;
+
+    /** Where prefilled form data came from (shown as a hint in the form). */
+    public ?string $suggestionSource = null;
 
     /**
      * Deep links from other pages: /?scan=1 opens the scanner, /?neu=1 the create form.
@@ -162,6 +167,7 @@ class ProductManager extends Component
      */
     public function createProduct(?string $barcode = null): void
     {
+        $this->suggestionSource = null;
         $this->currentProduct->resetForm($barcode);
 
         if ($this->selectedCategory !== '') {
@@ -175,6 +181,7 @@ class ProductManager extends Component
     public function editProduct(Product $product): void
     {
         $this->authorize('update', $product);
+        $this->suggestionSource = null;
 
         $product->load(['essentialOilDetail', 'carrierOilDetail']);
 
@@ -248,6 +255,7 @@ class ProductManager extends Component
     public function closeModal(): void
     {
         $this->isModalOpen = false;
+        $this->suggestionSource = null;
         $this->currentProduct->resetForm();
     }
 
@@ -269,15 +277,20 @@ class ProductManager extends Component
      */
     public function handleScannedBarcode(string $code): void
     {
-        $code = trim($code);
+        $raw = $code;
+        $code = Barcode::normalize($raw);
 
-        if ($code === '' || mb_strlen($code) > 64 || ! preg_match('/^[A-Za-z0-9\-\.\/: ]+$/', $code)) {
-            $this->dispatch('notify', message: 'Der gescannte Code ist ungültig.', type: 'error');
+        if ($code === null) {
+            $message = Barcode::isUrl($raw)
+                ? 'Dieser QR-Code enthält nur einen Link, keinen Produktcode. Bitte scanne den Strichcode auf dem Etikett.'
+                : 'Der gescannte Code ist ungültig.';
+            $this->dispatch('notify', message: $message, type: 'error');
 
             return;
         }
 
-        $product = $this->userProducts()->where('barcode', $code)->first();
+        $variants = Barcode::variants($code);
+        $product = $this->userProducts()->whereIn('barcode', $variants)->first();
 
         if ($product !== null) {
             $this->isModalOpen = false;
@@ -291,13 +304,44 @@ class ProductManager extends Component
         if ($this->isModalOpen) {
             $this->currentProduct->barcode = $code;
             $this->resetValidation('currentProduct.barcode');
-            $this->dispatch('notify', message: 'Barcode übernommen.');
+
+            // Only fill fields that are still empty; keep the category the user picked.
+            $suggestion = app(ProductLookup::class)->find($variants);
+            $filled = $suggestion !== null && $this->currentProduct->applySuggestion($suggestion, withCategory: false);
+            $this->suggestionSource = $filled ? $suggestion->source : $this->suggestionSource;
+            $this->dispatch('notify', message: $filled ? 'Barcode und Produktdaten übernommen – bitte prüfen.' : 'Barcode übernommen.');
 
             return;
         }
 
         $this->createProduct($code);
-        $this->dispatch('notify', message: 'Neuer Barcode – bitte Produkt erfassen.');
+
+        // 1. A product the user had before (deleted, e.g. empty bottle) → take over everything.
+        $previous = Auth::user()->products()->onlyTrashed()
+            ->with(['essentialOilDetail', 'carrierOilDetail'])
+            ->whereIn('barcode', $variants)
+            ->latest('deleted_at')
+            ->first();
+
+        if ($previous !== null) {
+            $this->currentProduct->fillFromPrevious($previous, $code);
+            $this->suggestionSource = 'deinem früheren Eintrag';
+            $this->dispatch('notify', message: 'Daten aus deinem früheren Eintrag übernommen – bitte prüfen.');
+
+            return;
+        }
+
+        // 2. Public product databases.
+        $suggestion = app(ProductLookup::class)->find($variants);
+
+        if ($suggestion !== null && $this->currentProduct->applySuggestion($suggestion)) {
+            $this->suggestionSource = $suggestion->source;
+            $this->dispatch('notify', message: "Produktdaten aus {$suggestion->source} übernommen – bitte prüfen.");
+
+            return;
+        }
+
+        $this->dispatch('notify', message: 'Neuer Barcode – keine Produktdaten gefunden. Bitte Produkt erfassen.');
     }
 
     public function render(): View

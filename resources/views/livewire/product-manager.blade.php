@@ -323,6 +323,14 @@
                 </div>
 
                 <div class="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 pb-6">
+                    @if ($suggestionSource)
+                        <p class="flex items-start gap-2 rounded-[14px] bg-[#DCE5FB] px-3.5 py-3 text-sm text-[#1E3A8A] dark:bg-cobalt-500/25 dark:text-cobalt-200"
+                            role="status">
+                            <x-app-icon name="check" class="mt-0.5 size-4" />
+                            <span>Vorschlag aus <strong>{{ $suggestionSource }}</strong> – bitte Name, Menge und Kategorie prüfen.</span>
+                        </p>
+                    @endif
+
                     {{-- Category segmented control --}}
                     <fieldset>
                         <legend class="sr-only">Kategorie</legend>

@@ -4,8 +4,8 @@
     {
       "name": "aromacare",
       "runtimeExecutable": "php",
-      "runtimeArgs": ["artisan", "serve", "--host=127.0.0.1", "--port=8000"],
-      "port": 8000
+      "runtimeArgs": ["artisan", "serve", "--host=127.0.0.1", "--port=9400"],
+      "port": 9400
     }
   ]
 }
